@@ -1,62 +1,117 @@
 /*
- * Design tokens — v1 baseline.
- * No external brand/mockup exists yet for this project: these are a
- * reasonable neutral starting point (system font stack, a single accent
- * hue, an 8px spacing scale). Swap freely once real brand values exist —
- * every component below consumes these variables, never a hardcoded value.
+ * MAISON — Design Tokens
+ * Luxury editorial e-commerce.
+ * Toutes les couleurs en OKLCH. Aucun #fff / #000 / white / black.
+ * Déclaré sur :root — premier fichier CSS chargé.
  */
+
 :root {
-  /* Color */
-  --color-bg: #ffffff;
-  --color-surface: #f7f6f4;
-  --color-border: #e3e1dd;
-  --color-text: #1c1b19;
-  --color-text-muted: #6b6862;
-  --color-accent: #1f5e46;
-  --color-accent-contrast: #ffffff;
-  --color-danger: #b3261e;
-  --color-success: #1f5e46;
-  --color-warning: #9a6700;
+  /* ═══════════════════════════════════════════════
+     COULEURS — Palette OKLCH
+     ═══════════════════════════════════════════════ */
 
-  /* Typography */
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.25rem;
-  --font-size-xl: 1.75rem;
-  --font-size-2xl: 2.5rem;
-  --line-height-base: 1.5;
+  /* ── Fond ────────────────────────────────── */
+  --color-bg:           oklch(0.97 0.008 90);  /* Blanc cassé chaud — fond principal */
+  --color-bg-alt:       oklch(0.94 0.012 85);  /* Beige très clair — fond secondaire (hero, cartes) */
+  --color-bg-elevated:  oklch(0.92 0.015 82);  /* Beige doux — hover, surfaces élevées */
 
-  /* Spacing (8px scale) */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-12: 3rem;
-  --space-16: 4rem;
+  /* ── Texte ───────────────────────────────── */
+  --color-text:         oklch(0.13 0.02 270);  /* Charbon profond (presque noir mais chaud) */
+  --color-text-soft:    oklch(0.35 0.025 260); /* Gris foncé chaud — meta, labels secondaires */
+  --color-text-muted:   oklch(0.55 0.025 250); /* Gris moyen — placeholder, discret */
 
-  /* Shape */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 16px;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  /* ── Accent Or / Champagne ───────────────── */
+  --color-accent:           oklch(0.72 0.11 68);  /* Or champagne — boutons, liens, accents */
+  --color-accent-hover:     oklch(0.62 0.12 68);  /* Or plus profond — hover */
+  --color-accent-light:     oklch(0.82 0.06 70);  /* Or clair — badges, tags */
+  --color-accent-bg:        oklch(0.92 0.03 72);  /* Fond teinté or très léger */
 
-  /* Layout */
-  --content-max-width: 72rem;
-  --header-height: 4rem;
-}
+  /* ── Surfaces / Conteneurs ───────────────── */
+  --color-surface:        oklch(0.96 0.006 85);  /* Fond de carte, modale */
+  --color-surface-hover:  oklch(0.93 0.01 83);  /* Hover sur carte */
+  --color-border:         oklch(0.85 0.012 80); /* Bordures fines */
+  --color-border-light:   oklch(0.90 0.008 82); /* Bordures très légères */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #14140f;
-    --color-surface: #1d1c17;
-    --color-border: #34322b;
-    --color-text: #f2f1ec;
-    --color-text-muted: #a8a49a;
-    --color-accent: #4fae87;
-    --color-accent-contrast: #0b1210;
-  }
+  /* ── États ───────────────────────────────── */
+  --color-error:    oklch(0.55 0.15 25);  /* Rouge profond terreux */
+  --color-success:  oklch(0.60 0.10 145); /* Vert sauge discret */
+  --color-info:     oklch(0.60 0.08 240); /* Bleu pâle minéral */
+
+  /* ── Overlay ──────────────────────────────── */
+  --color-overlay: oklch(0 0 0 / 0.35);   /* Voile sombre pour modales */
+
+
+  /* ═══════════════════════════════════════════════
+     TYPOGRAPHIE
+     ═══════════════════════════════════════════════ */
+
+  --font-display: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+  --font-body:    'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* Échelle typographique fluide */
+  --text-caption:  clamp(0.6875rem, 0.9vw, 0.8125rem);
+  --text-small:    clamp(0.8125rem, 1vw, 0.9375rem);
+  --text-body:     clamp(0.9375rem, 1.2vw, 1.125rem);
+  --text-nav:      clamp(0.8125rem, 1.2vw, 1rem);
+  --text-btn:      clamp(0.8125rem, 1.2vw, 1rem);
+  --text-h4:       clamp(0.875rem, 1.2vw, 1rem);
+  --text-h3:       clamp(1.125rem, 1.8vw, 1.5rem);
+  --text-h2:       clamp(1.75rem, 3vw, 2.75rem);
+  --text-h1:       clamp(2.5rem, 5vw, 4.5rem);
+
+  /* Hauteur de ligne */
+  --leading-tight:   1.1;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.7;
+
+  /* Épaisseurs */
+  --weight-light:   300;
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-bold:    700;
+
+  /* Tracking (letter-spacing) */
+  --tracking-tight:   -0.02em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.02em;
+  --tracking-wider:   0.04em;
+  --tracking-widest:  0.06em;
+
+
+  /* ═══════════════════════════════════════════════
+     ESPACEMENT & RAYON
+     ═══════════════════════════════════════════════ */
+
+  --space-xs:  0.25rem;
+  --space-sm:  0.5rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-full: 9999px;
+
+
+  /* ═══════════════════════════════════════════════
+     OMBRES
+     ═══════════════════════════════════════════════ */
+
+  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.04);
+  --shadow-md: 0 2px 8px oklch(0 0 0 / 0.06);
+  --shadow-lg: 0 4px 24px oklch(0 0 0 / 0.08);
+  --shadow-xl: 0 8px 48px oklch(0 0 0 / 0.10);
+
+
+  /* ═══════════════════════════════════════════════
+     LAYOUT
+     ═══════════════════════════════════════════════ */
+
+  --content-max: 1440px;
+  --content-narrow: 720px;
+  --content-gutter: clamp(1rem, 3vw, 3rem);
+  --header-height: 4.5rem;
 }

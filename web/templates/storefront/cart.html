@@ -1,40 +1,59 @@
-{{define "title"}}Panier — Boutique{{end}}
+{{define "title"}}Panier — MAISON{{end}}
 {{define "content"}}
-<h1>Votre panier</h1>
-{{if not .Cart.Items}}
-  <p class="empty-state">Votre panier est vide. <a href="/products">Continuer mes achats</a>.</p>
-{{else}}
-<table class="cart-table">
-  <thead>
-    <tr><th>Article</th><th>Prix</th><th>Qté</th><th>Total</th><th></th></tr>
-  </thead>
-  <tbody>
+<div class="maison-cart">
+  <h1 class="maison-cart__title">Panier</h1>
+
+  {{if not .Cart.Items}}
+  <div class="maison-cart__empty">
+    <p>Votre panier est vide.</p>
+    <a class="maison-btn maison-btn--outline" href="/products">Continuer mes achats</a>
+  </div>
+  {{else}}
+  <div class="maison-cart__items">
     {{range .Cart.Items}}
-    <tr>
-      <td>
-        <a href="/products/{{.ProductSlug}}">{{.ProductTitle}}</a>
-        <div class="cart-table__variant">{{.VariantName}}</div>
-      </td>
-      <td>{{money .UnitPriceCents}}</td>
-      <td>
-        <form class="cart-table__qty-form" method="post" action="/cart/items/{{.VariantID}}">
-          <input type="number" name="qty" value="{{.Qty}}" min="1" max="{{.StockQty}}">
-          <button type="submit" class="button">Mettre à jour</button>
-        </form>
-      </td>
-      <td>{{money .LineTotalCents}}</td>
-      <td>
-        <form method="post" action="/cart/items/{{.VariantID}}/remove">
-          <button type="submit" class="button button--text">Supprimer</button>
-        </form>
-      </td>
-    </tr>
+    <div class="maison-cart-item">
+      <img class="maison-cart-item__image" src="/static/img/placeholder.jpg" alt="{{.ProductTitle}}">
+      <div class="maison-cart-item__info">
+        <a class="maison-cart-item__title" href="/products/{{.ProductSlug}}">{{.ProductTitle}}</a>
+        <p class="maison-cart-item__variant">{{.VariantName}}</p>
+        <div class="maison-cart-item__actions">
+          <form class="maison-cart-item__qty-form" method="post" action="/cart/items/{{.VariantID}}">
+            <input type="number" class="maison-cart-item__qty" name="qty" value="{{.Qty}}" min="1" max="{{.StockQty}}">
+            <button class="maison-btn maison-btn--ghost" type="submit">Màj</button>
+          </form>
+          <form method="post" action="/cart/items/{{.VariantID}}/remove">
+            <button class="maison-cart-item__remove" type="submit">Supprimer</button>
+          </form>
+        </div>
+      </div>
+      <span class="maison-cart-item__price">{{money .LineTotalCents}}</span>
+    </div>
     {{end}}
-  </tbody>
-</table>
-<div class="cart-summary">
-  <p class="cart-summary__total">Sous-total : {{money .Cart.SubtotalCents}}</p>
-  <a class="button button--primary" href="/checkout">Commander</a>
+  </div>
+
+  <aside class="maison-cart-summary">
+    <h2 class="maison-cart-summary__title">Résumé</h2>
+    <div class="maison-cart-summary__rows">
+      <div class="maison-cart-summary__row">
+        <span>Sous-total</span>
+        <span>{{money .Cart.SubtotalCents}}</span>
+      </div>
+      <div class="maison-cart-summary__row">
+        <span>Livraison</span>
+        <span class="maison-cart-summary__free">Offerte</span>
+      </div>
+      <hr class="maison-cart-summary__divider">
+      <div class="maison-cart-summary__row maison-cart-summary__row--total">
+        <span>Total</span>
+        <span>{{money .Cart.SubtotalCents}}</span>
+      </div>
+    </div>
+    <a class="maison-btn maison-btn--filled maison-btn--large maison-btn--block" href="/checkout">Commander</a>
+  </aside>
+
+  <div class="maison-cart__continue">
+    <a class="maison-btn maison-btn--ghost" href="/products">← Continuer mes achats</a>
+  </div>
+  {{end}}
 </div>
-{{end}}
 {{end}}

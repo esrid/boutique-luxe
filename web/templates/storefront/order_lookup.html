@@ -1,14 +1,52 @@
-{{define "title"}}Trouver votre commande — Boutique{{end}}
+{{define "title"}}Suivre ma commande — MAISON{{end}}
 {{define "content"}}
-<form class="checkout-form" method="post" action="/orders/lookup">
-  <h1>Trouver votre commande</h1>
-  {{if .FormError}}<p class="form-error">{{.FormError}}</p>{{end}}
-  <label class="field">Numéro de commande
-    <input type="text" name="order_number" placeholder="BQ-XXXXXXXXXXXX" required>
-  </label>
-  <label class="field">Email
-    <input type="email" name="email" required>
-  </label>
-  <button class="button button--primary" type="submit">Rechercher</button>
-</form>
+<div class="maison-lookup">
+  <h1 class="maison-lookup__title">Suivre ma commande</h1>
+  <p class="maison-lookup__text">Saisissez votre numéro de commande et votre email pour retrouver votre commande.</p>
+
+  {{if .FormError}}<div class="maison-form-error">{{.FormError}}</div>{{end}}
+
+  <form method="post" action="/orders/lookup">
+    <label class="maison-field">
+      <span class="maison-field__label">Numéro de commande</span>
+      <input class="maison-field__input" type="text" name="order_number" placeholder="MAISON-XXXXXXXX" required>
+    </label>
+
+    <label class="maison-field">
+      <span class="maison-field__label">Email</span>
+      <input class="maison-field__input" type="email" name="email" required>
+    </label>
+
+    <button class="maison-btn maison-btn--filled" type="submit">Rechercher</button>
+  </form>
+
+  {{if .Order}}
+  <div class="maison-lookup__result">
+    <h2 class="maison-lookup__result-title">{{.Order.OrderNumber}}</h2>
+    <span class="maison-lookup__result-status">{{.Order.Status}}</span>
+
+    <div class="maison-confirmation__card">
+      {{range .Order.Items}}
+      <div class="maison-confirmation__item">
+        <span>{{.ProductTitle}} ({{.VariantName}}) &times; {{.Qty}}</span>
+        <span>{{money .LineTotalCents}}</span>
+      </div>
+      {{end}}
+      <div class="maison-confirmation__total">
+        <span>Total</span>
+        <span>{{money .Order.TotalCents}}</span>
+      </div>
+    </div>
+
+    <div class="maison-lookup__result-actions">
+      <a class="maison-btn maison-btn--outline" href="#">Détail</a>
+      {{if eq .Order.Status "pending" "paid"}}
+      <form method="post" action="/orders/{{.Order.ID}}/cancel" style="display:inline;">
+        <button class="maison-btn maison-btn--ghost" type="submit" style="color:var(--color-error);">Annuler la commande</button>
+      </form>
+      {{end}}
+    </div>
+  </div>
+  {{end}}
+</div>
 {{end}}

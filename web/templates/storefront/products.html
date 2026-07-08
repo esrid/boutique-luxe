@@ -1,50 +1,82 @@
-{{define "title"}}Boutique — Boutique{{end}}
+{{define "title"}}MAISON — {{if .Filter.CategorySlug}}{{.Filter.CategorySlug}}{{else}}Toutes les pièces{{end}}{{end}}
 {{define "content"}}
-<div class="shop-layout">
-  <aside class="shop-filters">
-    <form method="get" action="/products">
-      <fieldset>
-        <legend>Catégorie</legend>
-        <label><input type="radio" name="category" value="" {{if eq .Filter.CategorySlug ""}}checked{{end}}> Toutes</label>
-        {{range .Categories}}
-        <label><input type="radio" name="category" value="{{.Slug}}" {{if eq $.Filter.CategorySlug .Slug}}checked{{end}}> {{.Name}}</label>
-        {{end}}
-      </fieldset>
-      <fieldset>
-        <legend>Prix</legend>
-        <label>Min <input type="number" name="min" min="0" step="1" inputmode="numeric"></label>
-        <label>Max <input type="number" name="max" min="0" step="1" inputmode="numeric"></label>
-      </fieldset>
-      <label class="field">Trier
-        <select name="sort">
-          <option value="newest" {{if eq .Filter.Sort "newest"}}selected{{end}}>Nouveautés</option>
-          <option value="price_asc" {{if eq .Filter.Sort "price_asc"}}selected{{end}}>Prix : croissant</option>
-          <option value="price_desc" {{if eq .Filter.Sort "price_desc"}}selected{{end}}>Prix : décroissant</option>
-        </select>
-      </label>
-      <button type="submit" class="button button--primary">Appliquer</button>
+<!-- Breadcrumb -->
+<nav class="maison-breadcrumb" aria-label="Fil d'Ariane">
+  <a href="/">Accueil</a>
+  <span class="maison-breadcrumb__sep">/</span>
+  {{if .Filter.CategorySlug}}<a href="/products">Toutes les pièces</a><span class="maison-breadcrumb__sep">/</span>{{end}}
+  <span>{{if .Filter.CategorySlug}}{{.Filter.CategorySlug}}{{else}}Toutes les pièces{{end}}</span>
+</nav>
+
+<!-- Header -->
+<header class="maison-section__header" style="text-align:left;margin-bottom:var(--space-lg);padding-top:0;">
+  <h2 class="maison-section__title" style="font-style:normal;">
+    {{if .Filter.CategorySlug}}{{.Filter.CategorySlug}}{{else}}Toutes les pièces{{end}}
+  </h2>
+  <p class="maison-section__description" style="margin-inline:0;">
+    {{len .Products}} pièce{{if ne (len .Products) 1}}s{{end}}
+    — Des lignes épurées, des matières nobles.
+  </p>
+</header>
+
+<!-- Filters -->
+<div class="maison-filters">
+  <div class="maison-filters__group">
+    <span class="maison-filters__label">Catégorie</span>
+    <a class="maison-filters__link {{if eq .Filter.CategorySlug ""}}maison-filters__link--active{{end}}" href="/products?{{if .Filter.Sort}}sort={{.Filter.Sort}}&{{end}}">Toutes</a>
+    {{range .Categories}}
+    <a class="maison-filters__link {{if eq $.Filter.CategorySlug .Slug}}maison-filters__link--active{{end}}" href="/products?category={{.Slug}}{{if $.Filter.Sort}}&sort={{$.Filter.Sort}}{{end}}">{{.Name}}</a>
+    {{end}}
+  </div>
+  <div class="maison-filters__group">
+    <span class="maison-filters__label">Prix</span>
+    <form method="get" action="/products" style="display:contents;">
+      {{if .Filter.CategorySlug}}<input type="hidden" name="category" value="{{.Filter.CategorySlug}}">{{end}}
+      <input type="number" name="min" min="0" step="1" inputmode="numeric" placeholder="Min" value="{{if .Filter.MinPriceCents}}{{.Filter.MinPriceCents}}{{end}}">
+      <input type="number" name="max" min="0" step="1" inputmode="numeric" placeholder="Max" value="{{if .Filter.MaxPriceCents}}{{.Filter.MaxPriceCents}}{{end}}">
+      <button class="maison-btn maison-btn--ghost" type="submit">Appliquer</button>
     </form>
-  </aside>
-  <section class="product-grid" aria-label="Produits">
-    {{if not .Products}}
-      <p class="empty-state">Aucun produit ne correspond à ces filtres.</p>
-    {{end}}
-    {{range .Products}}
-    <a class="product-card" href="/products/{{.Slug}}">
-      <span class="product-card__image">
-        {{if .Thumbnail}}<img src="{{.Thumbnail}}" alt="{{.Title}}" loading="lazy">{{end}}
-      </span>
-      <h3 class="product-card__title">{{.Title}}</h3>
-      <p class="product-card__price">{{money .MinPriceCents}}</p>
-      {{if not .InStock}}<p class="badge badge--out">Rupture de stock</p>{{end}}
-    </a>
-    {{end}}
-  </section>
+  </div>
+  <div class="maison-filters__group">
+    <form method="get" action="/products" style="display:contents;">
+      {{if .Filter.CategorySlug}}<input type="hidden" name="category" value="{{.Filter.CategorySlug}}">{{end}}
+      <label class="maison-filters__label" for="sort-select">Trier</label>
+      <select id="sort-select" name="sort" onchange="this.form.submit()">
+        <option value="newest" {{if eq .Filter.Sort "newest"}}selected{{end}}>Nouveautés</option>
+        <option value="price_asc" {{if eq .Filter.Sort "price_asc"}}selected{{end}}>Prix : croissant</option>
+        <option value="price_desc" {{if eq .Filter.Sort "price_desc"}}selected{{end}}>Prix : décroissant</option>
+      </select>
+      <noscript><button class="maison-btn maison-btn--ghost" type="submit">OK</button></noscript>
+    </form>
+  </div>
 </div>
+
+<!-- Product Grid -->
+{{if not .Products}}
+<p class="maison-empty">Aucune pièce ne correspond à ces filtres. <a href="/products">Voir toute la collection</a>.</p>
+{{else}}
+<div class="maison-product-grid">
+  {{range .Products}}
+  <a class="maison-product-card" href="/products/{{.Slug}}">
+    <span class="maison-product-card__image">
+      {{if .Thumbnail}}<img src="{{.Thumbnail}}" alt="{{.Title}}" loading="lazy">{{end}}
+    </span>
+    <div class="maison-product-card__body">
+      <h3 class="maison-product-card__title">{{.Title}}</h3>
+      <p class="maison-product-card__price">{{money .MinPriceCents}}</p>
+      {{if not .InStock}}<span class="maison-product-card__badge maison-product-card__badge--out">Épuisé</span>{{end}}
+    </div>
+  </a>
+  {{end}}
+</div>
+{{end}}
+
+<!-- Pagination -->
 {{if or .PrevURL .NextURL}}
-<nav class="pager" aria-label="Pagination">
-  {{if .PrevURL}}<a href="{{.PrevURL}}">&larr; Précédent</a>{{end}}
-  {{if .NextURL}}<a href="{{.NextURL}}">Suivant &rarr;</a>{{end}}
+<nav class="maison-pagination" aria-label="Pagination">
+  {{if .PrevURL}}<a class="maison-pagination__link maison-pagination__link--prev" href="{{.PrevURL}}">← Précédent</a>{{end}}
+  <span class="maison-pagination__link maison-pagination__link--active">1</span>
+  {{if .NextURL}}<a class="maison-pagination__link maison-pagination__link--next" href="{{.NextURL}}">Suivant →</a>{{end}}
 </nav>
 {{end}}
 {{end}}

@@ -1,9 +1,12 @@
 {{define "layout"}}<!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{block "title" .}}Admin — Boutique{{end}}</title>
+  <title>{{block "title" .}}Admin — MAISON{{end}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/css/tokens.css">
   <link rel="stylesheet" href="/static/css/admin.css">
   {{block "head_extra" .}}{{end}}
@@ -12,18 +15,18 @@
   {{if .Admin}}
   <div class="admin-shell">
     <nav class="admin-sidebar">
-      <a class="admin-sidebar__brand" href="/admin">Boutique Admin</a>
+      <a class="admin-sidebar__brand" href="/admin">MAISON</a>
       <ul class="admin-sidebar__nav">
-        <li><a href="/admin">Dashboard</a></li>
-        <li><a href="/admin/products">Products</a></li>
-        <li><a href="/admin/categories">Categories</a></li>
-        <li><a href="/admin/orders">Orders</a></li>
-        <li><a href="/admin/inventory">Inventory</a></li>
-        <li><a href="/admin/discounts">Discounts</a></li>
+        <li><a href="/admin">Tableau de bord</a></li>
+        <li><a href="/admin/products">Produits</a></li>
+        <li><a href="/admin/categories">Catégories</a></li>
+        <li><a href="/admin/orders">Commandes</a></li>
+        <li><a href="/admin/inventory">Stocks</a></li>
+        <li><a href="/admin/discounts">Remises</a></li>
       </ul>
       <form class="admin-sidebar__logout" method="post" action="/admin/logout">
         <span class="admin-sidebar__email">{{.Admin.Email}}</span>
-        <button type="submit" class="button button--text">Log out</button>
+        <button type="submit" class="button button--text">Déconnexion</button>
       </form>
     </nav>
     <main class="admin-main">

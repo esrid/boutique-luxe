@@ -1,51 +1,69 @@
-{{define "title"}}{{.Product.Title}} — Boutique{{end}}
+{{define "title"}}{{.Product.Title}} — MAISON{{end}}
 {{define "content"}}
-<div class="product-detail">
-  <div class="product-detail__gallery">
+<nav class="maison-breadcrumb" aria-label="Fil d'Ariane">
+  <a href="/">Accueil</a>
+  <span class="maison-breadcrumb__sep">/</span>
+  <a href="/products">Toutes les pièces</a>
+  <span class="maison-breadcrumb__sep">/</span>
+  <span>{{.Product.Title}}</span>
+</nav>
+
+<div class="maison-product-detail">
+  <!-- Gallery -->
+  <div class="maison-product-detail__gallery">
     {{if .Product.Images}}
-      <img class="product-detail__main-image" src="{{(index .Product.Images 0).URL}}" alt="{{(index .Product.Images 0).Alt}}">
-      {{if gt (len .Product.Images) 1}}
-      <div class="product-detail__thumbs">
-        {{range .Product.Images}}
-        <img src="{{.URL}}" alt="{{.Alt}}" loading="lazy">
-        {{end}}
-      </div>
+    <img class="maison-product-detail__main-image" src="{{(index .Product.Images 0).URL}}" alt="{{(index .Product.Images 0).Alt}}">
+    {{if gt (len .Product.Images) 1}}
+    <div class="maison-product-detail__thumbs">
+      {{range .Product.Images}}
+      <img class="maison-product-detail__thumb" src="{{.URL}}" alt="{{.Alt}}" loading="lazy">
       {{end}}
+    </div>
+    {{end}}
     {{end}}
   </div>
 
-  <div class="product-detail__info">
-    <h1>{{.Product.Title}}</h1>
-    <p class="product-detail__description">{{.Product.Description}}</p>
+  <!-- Info -->
+  <div class="maison-product-detail__info">
+    <h1 class="maison-product-detail__title">{{.Product.Title}}</h1>
+    <p class="maison-product-detail__price">{{money (index .Product.Variants 0).PriceCents}}</p>
+    <hr class="maison-product-detail__divider">
 
-    <form method="post" action="/cart/items">
+    <p class="maison-product-detail__description">{{.Product.Description}}</p>
+
+    <form class="maison-product-detail__form" method="post" action="/cart/items">
       {{$selected := false}}
-      <fieldset class="variant-list">
-        <legend>Choisissez une option</legend>
-        {{range .Product.Variants}}
-        {{$checked := false}}
-        {{if and (not $selected) (gt .StockQty 0)}}{{$checked = true}}{{$selected = true}}{{end}}
-        <label class="variant-row {{if eq .StockQty 0}}variant-row--unavailable{{end}}">
-          <input type="radio" name="variant_id" value="{{.ID}}" required {{if $checked}}checked{{end}} {{if eq .StockQty 0}}disabled{{end}}>
-          <span class="variant-row__name">{{.Name}}</span>
-          <span class="variant-row__price">{{money .PriceCents}}</span>
-          {{if eq .StockQty 0}}
-            <span class="badge badge--out">Rupture de stock</span>
-          {{else if .LowStock}}
-            <span class="badge badge--low">Plus que {{.StockQty}} en stock</span>
+      <fieldset class="maison-variant">
+        <legend class="maison-variant__legend">Options</legend>
+        <div class="maison-variant__options">
+          {{range .Product.Variants}}
+          {{$checked := false}}
+          {{if and (not $selected) (gt .StockQty 0)}}{{$checked = true}}{{$selected = true}}{{end}}
+          <label class="maison-variant__option {{if eq .StockQty 0}}maison-variant__option--disabled{{end}}">
+            <input type="radio" name="variant_id" value="{{.ID}}" required {{if $checked}}checked{{end}} {{if eq .StockQty 0}}disabled{{end}}>
+            <span>{{.Name}}</span>
+          </label>
           {{end}}
-        </label>
-        {{end}}
+        </div>
       </fieldset>
 
-      <label class="field">Quantité
-        <input type="number" name="qty" value="1" min="1">
+      <label class="maison-field">
+        <span class="maison-field__label">Quantité</span>
+        <input class="maison-field__input" type="number" name="qty" value="1" min="1" style="width:5rem;">
       </label>
 
-      <button class="button button--primary button--sticky" type="submit" {{if not $selected}}disabled title="Rupture de stock"{{end}}>
+      <button class="maison-btn maison-btn--filled maison-btn--large maison-btn--block" type="submit" {{if not $selected}}disabled{{end}}>
         Ajouter au panier
       </button>
     </form>
+
+    <hr class="maison-product-detail__divider">
+
+    <div class="maison-product-detail__meta">
+      <p>Livraison gratuite dès 300 €</p>
+      <p>Retours sous 30 jours</p>
+      <p>Entretien : lavage à froid, séchage à l'air libre.</p>
+    </div>
   </div>
 </div>
 {{end}}

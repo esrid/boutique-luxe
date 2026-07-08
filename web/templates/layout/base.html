@@ -3,25 +3,90 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{block "title" .}}Boutique{{end}}</title>
+  <title>{{block "title" .}}MAISON{{end}}</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="/static/css/tokens.css">
   <link rel="stylesheet" href="/static/css/storefront.css">
   {{block "head_extra" .}}{{end}}
 </head>
 <body>
-  <header class="site-header">
-    <a class="site-header__brand" href="/">Boutique</a>
-    <nav class="site-header__nav">
-      <a href="/products">Boutique</a>
-      <a href="/cart">Panier{{if .CartCount}} ({{.CartCount}}){{end}}</a>
+  <header class="maison-navbar">
+    <a class="maison-navbar__brand" href="/">MAISON</a>
+    <nav class="maison-navbar__center">
+      <a class="maison-navbar__link" href="/products?sort=newest">Nouveautés</a>
+      <a class="maison-navbar__link" href="/products?category=femme">Femme</a>
+      <a class="maison-navbar__link" href="/products?category=homme">Homme</a>
+      <a class="maison-navbar__link" href="/products">Collections</a>
     </nav>
+    <div class="maison-navbar__actions">
+      <a class="maison-navbar__icon" href="/orders/lookup" aria-label="Rechercher">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </a>
+      <a class="maison-navbar__icon" href="/cart" aria-label="Panier">
+        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        {{if .CartCount}}<span class="maison-navbar__cart-count">{{.CartCount}}</span>{{end}}
+      </a>
+    </div>
   </header>
+
   <main class="site-main">
-    {{template "content" .}}
+    <div class="maison-layout">
+      {{template "content" .}}
+    </div>
   </main>
-  <footer class="site-footer">
-    <p>&copy; {{.Year}} Boutique</p>
+
+  <footer class="maison-footer">
+    <div class="maison-footer__grid">
+      <div>
+        <p class="maison-footer__brand">MAISON</p>
+        <p class="maison-footer__tagline">« L'élégance silencieuse. »</p>
+        <div class="maison-footer__newsletter">
+          <input class="maison-footer__newsletter-input" type="email" placeholder="Votre email" aria-label="Newsletter">
+          <button class="maison-btn maison-btn--filled" type="button">S'abonner</button>
+        </div>
+      </div>
+      <div>
+        <p class="maison-footer__col-title">Boutique</p>
+        <ul class="maison-footer__links">
+          <li><a class="maison-footer__link" href="/products?sort=newest">Nouveautés</a></li>
+          <li><a class="maison-footer__link" href="/products?category=femme">Femme</a></li>
+          <li><a class="maison-footer__link" href="/products?category=homme">Homme</a></li>
+          <li><a class="maison-footer__link" href="/products">Toutes les collections</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="maison-footer__col-title">Service</p>
+        <ul class="maison-footer__links">
+          <li><a class="maison-footer__link" href="#">Livraison</a></li>
+          <li><a class="maison-footer__link" href="#">Retours</a></li>
+          <li><a class="maison-footer__link" href="/orders/lookup">Suivi de commande</a></li>
+          <li><a class="maison-footer__link" href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="maison-footer__col-title">Informations</p>
+        <ul class="maison-footer__links">
+          <li><a class="maison-footer__link" href="#">À propos</a></li>
+          <li><a class="maison-footer__link" href="#">Notre histoire</a></li>
+          <li><a class="maison-footer__link" href="#">Engagements</a></li>
+          <li><a class="maison-footer__link" href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="maison-footer__bottom">
+      <p class="maison-footer__copy">&copy; {{.Year}} Maison. Tous droits réservés.</p>
+      <div class="maison-footer__legal">
+        <a class="maison-footer__legal-link" href="#">CGV</a>
+        <a class="maison-footer__legal-link" href="#">Mentions légales</a>
+        <a class="maison-footer__legal-link" href="#">Confidentialité</a>
+      </div>
+    </div>
   </footer>
+
   {{block "scripts" .}}{{end}}
 </body>
 </html>{{end}}

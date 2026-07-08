@@ -1,51 +1,89 @@
-{{define "title"}}Paiement — Boutique{{end}}
+{{define "title"}}Paiement — MAISON{{end}}
 {{define "content"}}
-<div class="checkout-layout">
-  <form class="checkout-form" method="post" action="/checkout">
-    <h1>Paiement</h1>
-    {{if .FormError}}<p class="form-error">{{.FormError}}</p>{{end}}
+<div class="maison-checkout">
+  <h1 class="maison-checkout__title">Paiement sécurisé</h1>
 
-    <label class="field">Email
-      <input type="email" name="email" value="{{.Input.Email}}" required>
-    </label>
-    <label class="field">Nom complet
-      <input type="text" name="name" value="{{.Input.Name}}" required>
-    </label>
-    <label class="field">Adresse
-      <input type="text" name="address" value="{{.Input.Address}}" required>
-    </label>
-    <label class="field">Ville
-      <input type="text" name="city" value="{{.Input.City}}" required>
-    </label>
-    <label class="field">Code postal
-      <input type="text" name="postal_code" value="{{.Input.PostalCode}}" required>
-    </label>
-    <label class="field">Pays
-      <input type="text" name="country" value="{{.Input.Country}}" required>
-    </label>
-    <label class="field">Code promo (facultatif)
-      <input type="text" name="discount_code" value="{{.Input.DiscountCode}}">
-    </label>
+  {{if .FormError}}<div class="maison-form-error">{{.FormError}}</div>{{end}}
 
-    <p class="checkout-form__note">Le paiement est simulé pour cette boutique — aucune donnée bancaire n'est collectée, et votre commande sera marquée comme payée immédiatement.</p>
+  <form class="maison-checkout__form" method="post" action="/checkout">
+    <fieldset class="maison-checkout__section">
+      <legend class="maison-checkout__legend">Coordonnées</legend>
 
-    <button class="button button--primary button--sticky" type="submit">Commander — {{money .Cart.SubtotalCents}}</button>
+      <label class="maison-field">
+        <span class="maison-field__label">Email</span>
+        <input class="maison-field__input" type="email" name="email" value="{{.Input.Email}}" required>
+      </label>
+
+      <label class="maison-field">
+        <span class="maison-field__label">Nom complet</span>
+        <input class="maison-field__input" type="text" name="name" value="{{.Input.Name}}" required>
+      </label>
+    </fieldset>
+
+    <fieldset class="maison-checkout__section">
+      <legend class="maison-checkout__legend">Livraison</legend>
+
+      <label class="maison-field">
+        <span class="maison-field__label">Adresse</span>
+        <input class="maison-field__input" type="text" name="address" value="{{.Input.Address}}" required>
+      </label>
+
+      <div class="maison-field__row">
+        <label class="maison-field">
+          <span class="maison-field__label">Ville</span>
+          <input class="maison-field__input" type="text" name="city" value="{{.Input.City}}" required>
+        </label>
+        <label class="maison-field">
+          <span class="maison-field__label">Code postal</span>
+          <input class="maison-field__input" type="text" name="postal_code" value="{{.Input.PostalCode}}" required>
+        </label>
+      </div>
+
+      <label class="maison-field">
+        <span class="maison-field__label">Pays</span>
+        <input class="maison-field__input" type="text" name="country" value="{{.Input.Country}}" required>
+      </label>
+    </fieldset>
+
+    <fieldset class="maison-checkout__section">
+      <legend class="maison-checkout__legend">Code promo</legend>
+      <label class="maison-field">
+        <span class="maison-field__label">Code (facultatif)</span>
+        <input class="maison-field__input" type="text" name="discount_code" value="{{.Input.DiscountCode}}">
+      </label>
+    </fieldset>
+
+    <p class="maison-checkout__note">Le paiement est simulé pour cette boutique — aucune donnée bancaire n'est collectée. Votre commande sera confirmée immédiatement.</p>
+
+    <button class="maison-btn maison-btn--filled maison-btn--large maison-btn--block" type="submit">
+      Payer — {{money .Cart.SubtotalCents}}
+    </button>
   </form>
 
-  <aside class="checkout-summary">
-    <h2>Récapitulatif</h2>
-    <ul class="checkout-summary__items">
+  <aside class="maison-cart-summary">
+    <h2 class="maison-cart-summary__title">Récapitulatif</h2>
+    <div class="maison-cart-summary__rows">
       {{range .Cart.Items}}
-      <li>
+      <div class="maison-cart-summary__row">
         <span>{{.ProductTitle}} ({{.VariantName}}) &times; {{.Qty}}</span>
         <span>{{money .LineTotalCents}}</span>
-      </li>
+      </div>
       {{end}}
-    </ul>
-    <p class="checkout-summary__total">
-      <span>Sous-total</span>
-      <span>{{money .Cart.SubtotalCents}}</span>
-    </p>
+      <hr class="maison-cart-summary__divider">
+      <div class="maison-cart-summary__row">
+        <span>Sous-total</span>
+        <span>{{money .Cart.SubtotalCents}}</span>
+      </div>
+      <div class="maison-cart-summary__row">
+        <span>Livraison</span>
+        <span class="maison-cart-summary__free">Offerte</span>
+      </div>
+      <hr class="maison-cart-summary__divider">
+      <div class="maison-cart-summary__row maison-cart-summary__row--total">
+        <span>Total</span>
+        <span>{{money .Cart.SubtotalCents}}</span>
+      </div>
+    </div>
   </aside>
 </div>
 {{end}}

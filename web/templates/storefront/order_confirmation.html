@@ -1,35 +1,41 @@
-{{define "title"}}Commande {{.Order.OrderNumber}} — Boutique{{end}}
+{{define "title"}}Commande confirmée — MAISON{{end}}
 {{define "content"}}
-<div class="order-confirmation">
-  <p class="order-confirmation__badge">Commande confirmée</p>
-  <h1>Merci, {{.Order.Shipping.Name}}.</h1>
-  <p>Votre commande <strong>{{.Order.OrderNumber}}</strong> est {{.Order.Status}}. Une copie de cette confirmation ne vous est pas encore envoyée par email — mettez cette page en favori ou utilisez la <a href="/orders/lookup">recherche de commande</a> avec votre email pour la retrouver.</p>
+<div class="maison-confirmation">
+  <svg class="maison-confirmation__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor">
+    <circle cx="24" cy="24" r="18"/>
+    <path d="M16 24l5 5 11-11"/>
+  </svg>
 
-  <table class="cart-table">
-    <thead><tr><th>Article</th><th>Qté</th><th>Total</th></tr></thead>
-    <tbody>
-      {{range .Order.Items}}
-      <tr>
-        <td>{{.ProductTitle}} <div class="cart-table__variant">{{.VariantName}}</div></td>
-        <td>{{.Qty}}</td>
-        <td>{{money .LineTotalCents}}</td>
-      </tr>
-      {{end}}
-    </tbody>
-  </table>
+  <h1 class="maison-confirmation__title">Commande confirmée</h1>
+  <p class="maison-confirmation__text">
+    Merci, {{.Order.Shipping.Name}}.<br>
+    Un email de confirmation vous sera envoyé sous peu.
+  </p>
 
-  <div class="cart-summary">
-    <p>Sous-total : {{money .Order.SubtotalCents}}</p>
-    {{if .Order.DiscountCents}}<p>Réduction ({{.Order.DiscountCode}}): -{{money .Order.DiscountCents}}</p>{{end}}
-    <p class="cart-summary__total">Total : {{money .Order.TotalCents}}</p>
+  <p class="maison-confirmation__number">{{.Order.OrderNumber}}</p>
+
+  <div class="maison-confirmation__card">
+    <h2 class="maison-confirmation__card-title">Récapitulatif de la commande</h2>
+    {{range .Order.Items}}
+    <div class="maison-confirmation__item">
+      <span>{{.ProductTitle}} ({{.VariantName}}) &times; {{.Qty}}</span>
+      <span>{{money .LineTotalCents}}</span>
+    </div>
+    {{end}}
+    <div class="maison-confirmation__total">
+      <span>Total</span>
+      <span>{{money .Order.TotalCents}}</span>
+    </div>
   </div>
 
-  <h2>Adresse de livraison</h2>
-  <p>
-    {{.Order.Shipping.Name}}<br>
+  <h2 class="maison-confirmation__card-title">Adresse de livraison</h2>
+  <div class="maison-confirmation__address">
+    <strong>{{.Order.Shipping.Name}}</strong><br>
     {{.Order.Shipping.Line1}}<br>
     {{.Order.Shipping.City}}, {{.Order.Shipping.PostalCode}}<br>
     {{.Order.Shipping.Country}}
-  </p>
+  </div>
+
+  <a class="maison-btn maison-btn--outline" href="/products">Continuer mes achats</a>
 </div>
 {{end}}

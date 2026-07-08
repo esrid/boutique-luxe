@@ -70,6 +70,16 @@
   /* Layout */
   --content-max-width: 80rem;
   --header-height: 4rem;
+
+  /* Aliases for frontend-engineer variable names */
+  --font-body: var(--font-sans);
+  --text-body: var(--text-base);
+  --leading-relaxed: var(--leading-loose);
+  --content-max: var(--content-max-width);
+  --content-gutter: var(--space-xl);
+  --content-narrow: 48rem;
+  --color-border-light: var(--color-border);
+  --space-section: var(--space-4xl);
 }
 
 @media (prefers-color-scheme: dark) {

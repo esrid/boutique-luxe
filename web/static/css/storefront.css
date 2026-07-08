@@ -93,11 +93,12 @@ a:hover {
 }
 
 .maison-navbar__brand {
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-weight: var(--weight-bold);
-  font-style: italic;
-  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
-  letter-spacing: var(--tracking-wide);
+  font-style: normal;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
   text-decoration: none;
   color: var(--color-text);
   flex-shrink: 0;
@@ -253,10 +254,12 @@ a:hover {
 }
 
 .maison-hero__tagline {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: var(--text-h2);
-  font-weight: var(--weight-regular);
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
   line-height: var(--leading-tight);
   margin: 0 0 var(--space-md);
   max-width: 20ch;
@@ -360,13 +363,11 @@ a:hover {
   display: block;
   text-decoration: none;
   color: var(--color-text);
-  transition: transform 400ms ease, box-shadow 400ms ease;
   background: var(--color-surface);
 }
 
 .maison-product-card:hover {
-  transform: scale(1.02);
-  box-shadow: var(--shadow-lg);
+  /* Zara: no scale, no shadow — image zoom only */
 }
 
 .maison-product-card__image {
@@ -381,32 +382,31 @@ a:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 600ms ease;
+  transition: transform 0.3s ease;
 }
 
 .maison-product-card:hover .maison-product-card__image img {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
 
 .maison-product-card__body {
-  padding: var(--space-md) var(--space-sm) var(--space-lg);
+  padding: var(--space-sm) 0;
 }
 
 .maison-product-card__title {
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-weight: var(--weight-regular);
-  font-size: var(--text-h3);
-  letter-spacing: var(--tracking-wide);
+  font-size: var(--text-sm);
   margin: 0 0 var(--space-xs);
   line-height: var(--leading-tight);
+  color: var(--color-text);
 }
 
 .maison-product-card__price {
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
   font-weight: var(--weight-regular);
-  font-size: var(--text-small);
-  letter-spacing: var(--tracking-wider);
-  color: var(--color-text-soft);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
   margin: 0;
 }
 
@@ -454,10 +454,12 @@ a:hover {
 }
 
 .maison-section__title {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: var(--weight-regular);
-  font-size: var(--text-h2);
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: var(--weight-medium);
+  font-size: var(--text-lg);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
   line-height: var(--leading-tight);
   margin: 0 0 var(--space-sm);
   color: var(--color-text);

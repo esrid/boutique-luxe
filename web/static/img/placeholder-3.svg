@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-label="Ceramic Mug placeholder">
+  <rect width="600" height="600" fill="#efece5"/>
+  <rect x="220" y="220" width="160" height="180" rx="10" fill="#d0cabb"/>
+  <path d="M380 250 h30 a40 40 0 0 1 0 80 h-30" fill="none" stroke="#a89f8c" stroke-width="16"/>
+  <text x="300" y="540" text-anchor="middle" font-family="sans-serif" font-size="24" fill="#6b6862">Ceramic Mug</text>
+</svg>

@@ -1,0 +1,50 @@
+{{define "title"}}Boutique — Boutique{{end}}
+{{define "content"}}
+<div class="shop-layout">
+  <aside class="shop-filters">
+    <form method="get" action="/products">
+      <fieldset>
+        <legend>Catégorie</legend>
+        <label><input type="radio" name="category" value="" {{if eq .Filter.CategorySlug ""}}checked{{end}}> Toutes</label>
+        {{range .Categories}}
+        <label><input type="radio" name="category" value="{{.Slug}}" {{if eq $.Filter.CategorySlug .Slug}}checked{{end}}> {{.Name}}</label>
+        {{end}}
+      </fieldset>
+      <fieldset>
+        <legend>Prix</legend>
+        <label>Min <input type="number" name="min" min="0" step="1" inputmode="numeric"></label>
+        <label>Max <input type="number" name="max" min="0" step="1" inputmode="numeric"></label>
+      </fieldset>
+      <label class="field">Trier
+        <select name="sort">
+          <option value="newest" {{if eq .Filter.Sort "newest"}}selected{{end}}>Nouveautés</option>
+          <option value="price_asc" {{if eq .Filter.Sort "price_asc"}}selected{{end}}>Prix : croissant</option>
+          <option value="price_desc" {{if eq .Filter.Sort "price_desc"}}selected{{end}}>Prix : décroissant</option>
+        </select>
+      </label>
+      <button type="submit" class="button button--primary">Appliquer</button>
+    </form>
+  </aside>
+  <section class="product-grid" aria-label="Produits">
+    {{if not .Products}}
+      <p class="empty-state">Aucun produit ne correspond à ces filtres.</p>
+    {{end}}
+    {{range .Products}}
+    <a class="product-card" href="/products/{{.Slug}}">
+      <span class="product-card__image">
+        {{if .Thumbnail}}<img src="{{.Thumbnail}}" alt="{{.Title}}" loading="lazy">{{end}}
+      </span>
+      <h3 class="product-card__title">{{.Title}}</h3>
+      <p class="product-card__price">{{money .MinPriceCents}}</p>
+      {{if not .InStock}}<p class="badge badge--out">Rupture de stock</p>{{end}}
+    </a>
+    {{end}}
+  </section>
+</div>
+{{if or .PrevURL .NextURL}}
+<nav class="pager" aria-label="Pagination">
+  {{if .PrevURL}}<a href="{{.PrevURL}}">&larr; Précédent</a>{{end}}
+  {{if .NextURL}}<a href="{{.NextURL}}">Suivant &rarr;</a>{{end}}
+</nav>
+{{end}}
+{{end}}

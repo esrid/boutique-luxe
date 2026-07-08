@@ -1,0 +1,15 @@
+{{define "title"}}Admin login — Boutique{{end}}
+{{define "content"}}
+<form class="admin-login-form" method="post" action="/admin/login">
+  <input type="hidden" name="next" value="{{.Next}}">
+  <h1>Boutique Admin</h1>
+  {{if .FormError}}<p class="form-error">{{.FormError}}</p>{{end}}
+  <label class="field">Email
+    <input type="email" name="email" required autofocus>
+  </label>
+  <label class="field">Password
+    <input type="password" name="password" required>
+  </label>
+  <button class="button button--primary" type="submit">Log in</button>
+</form>
+{{end}}

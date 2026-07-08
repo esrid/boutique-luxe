@@ -1,0 +1,35 @@
+{{define "title"}}Commande {{.Order.OrderNumber}} — Boutique{{end}}
+{{define "content"}}
+<div class="order-confirmation">
+  <p class="order-confirmation__badge">Commande confirmée</p>
+  <h1>Merci, {{.Order.Shipping.Name}}.</h1>
+  <p>Votre commande <strong>{{.Order.OrderNumber}}</strong> est {{.Order.Status}}. Une copie de cette confirmation ne vous est pas encore envoyée par email — mettez cette page en favori ou utilisez la <a href="/orders/lookup">recherche de commande</a> avec votre email pour la retrouver.</p>
+
+  <table class="cart-table">
+    <thead><tr><th>Article</th><th>Qté</th><th>Total</th></tr></thead>
+    <tbody>
+      {{range .Order.Items}}
+      <tr>
+        <td>{{.ProductTitle}} <div class="cart-table__variant">{{.VariantName}}</div></td>
+        <td>{{.Qty}}</td>
+        <td>{{money .LineTotalCents}}</td>
+      </tr>
+      {{end}}
+    </tbody>
+  </table>
+
+  <div class="cart-summary">
+    <p>Sous-total : {{money .Order.SubtotalCents}}</p>
+    {{if .Order.DiscountCents}}<p>Réduction ({{.Order.DiscountCode}}): -{{money .Order.DiscountCents}}</p>{{end}}
+    <p class="cart-summary__total">Total : {{money .Order.TotalCents}}</p>
+  </div>
+
+  <h2>Adresse de livraison</h2>
+  <p>
+    {{.Order.Shipping.Name}}<br>
+    {{.Order.Shipping.Line1}}<br>
+    {{.Order.Shipping.City}}, {{.Order.Shipping.PostalCode}}<br>
+    {{.Order.Shipping.Country}}
+  </p>
+</div>
+{{end}}

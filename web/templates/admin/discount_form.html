@@ -1,0 +1,28 @@
+{{define "title"}}{{if .IsNew}}New discount code{{else}}Edit discount code{{end}} — Boutique Admin{{end}}
+{{define "content"}}
+<h1>{{if .IsNew}}New discount code{{else}}Edit discount code{{end}}</h1>
+{{if .FormError}}<p class="form-error">{{.FormError}}</p>{{end}}
+<form class="admin-form" method="post" action="{{if .IsNew}}/admin/discounts{{else}}/admin/discounts/{{.Discount.ID}}{{end}}">
+  <label class="field">Code
+    <input type="text" name="code" value="{{.Discount.Code}}" placeholder="SUMMER20" required>
+  </label>
+  <label class="field">Type
+    <select name="type">
+      <option value="percent" {{if eq .Discount.Type "percent"}}selected{{end}}>Percent off</option>
+      <option value="fixed" {{if eq .Discount.Type "fixed"}}selected{{end}}>Fixed amount off</option>
+    </select>
+  </label>
+  <label class="field">Value (percent: 1-100, fixed: dollars e.g. 10.00)
+    <input type="text" name="value" value="{{if eq .Discount.Type "fixed"}}{{moneyPlain .Discount.Value}}{{else}}{{.Discount.Value}}{{end}}" required>
+  </label>
+  <label class="field">Expires (optional)
+    <input type="date" name="expires_at" {{if .Discount.ExpiresAt}}value="{{.Discount.ExpiresAt.Format "2006-01-02"}}"{{end}}>
+  </label>
+  <label class="admin-checkbox-field">
+    <input type="checkbox" name="active" {{if .Discount.Active}}checked{{end}}>
+    Active
+  </label>
+  <button class="button button--primary" type="submit">Save</button>
+  <a class="button" href="/admin/discounts">Cancel</a>
+</form>
+{{end}}

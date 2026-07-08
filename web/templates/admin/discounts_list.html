@@ -1,0 +1,31 @@
+{{define "title"}}Discounts — Boutique Admin{{end}}
+{{define "content"}}
+<div class="admin-page-header">
+  <h1>Discount codes</h1>
+  <a class="button button--primary" href="/admin/discounts/new">New code</a>
+</div>
+{{if not .Discounts}}
+  <p class="admin-placeholder">No discount codes yet.</p>
+{{else}}
+<table class="admin-table">
+  <thead><tr><th>Code</th><th>Type</th><th>Value</th><th>Status</th><th>Expires</th><th></th></tr></thead>
+  <tbody>
+    {{range .Discounts}}
+    <tr>
+      <td>{{.Code}}</td>
+      <td>{{.Type}}</td>
+      <td>{{if eq .Type "percent"}}{{.Value}}%{{else}}{{money .Value}}{{end}}</td>
+      <td>{{if .Active}}<span class="badge badge--published">active</span>{{else}}<span class="badge badge--draft">inactive</span>{{end}}</td>
+      <td>{{if .ExpiresAt}}{{.ExpiresAt.Format "2006-01-02"}}{{else}}—{{end}}</td>
+      <td class="admin-table__actions">
+        <a href="/admin/discounts/{{.ID}}/edit">Edit</a>
+        <form method="post" action="/admin/discounts/{{.ID}}/delete" data-confirm="Delete this discount code?">
+          <button type="submit" class="button button--text">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {{end}}
+  </tbody>
+</table>
+{{end}}
+{{end}}

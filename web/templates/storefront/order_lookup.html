@@ -1,0 +1,14 @@
+{{define "title"}}Trouver votre commande — Boutique{{end}}
+{{define "content"}}
+<form class="checkout-form" method="post" action="/orders/lookup">
+  <h1>Trouver votre commande</h1>
+  {{if .FormError}}<p class="form-error">{{.FormError}}</p>{{end}}
+  <label class="field">Numéro de commande
+    <input type="text" name="order_number" placeholder="BQ-XXXXXXXXXXXX" required>
+  </label>
+  <label class="field">Email
+    <input type="email" name="email" required>
+  </label>
+  <button class="button button--primary" type="submit">Rechercher</button>
+</form>
+{{end}}

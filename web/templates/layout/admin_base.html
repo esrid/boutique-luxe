@@ -1,0 +1,40 @@
+{{define "layout"}}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{block "title" .}}Admin — Boutique{{end}}</title>
+  <link rel="stylesheet" href="/static/css/tokens.css">
+  <link rel="stylesheet" href="/static/css/admin.css">
+  {{block "head_extra" .}}{{end}}
+</head>
+<body class="admin">
+  {{if .Admin}}
+  <div class="admin-shell">
+    <nav class="admin-sidebar">
+      <a class="admin-sidebar__brand" href="/admin">Boutique Admin</a>
+      <ul class="admin-sidebar__nav">
+        <li><a href="/admin">Dashboard</a></li>
+        <li><a href="/admin/products">Products</a></li>
+        <li><a href="/admin/categories">Categories</a></li>
+        <li><a href="/admin/orders">Orders</a></li>
+        <li><a href="/admin/inventory">Inventory</a></li>
+        <li><a href="/admin/discounts">Discounts</a></li>
+      </ul>
+      <form class="admin-sidebar__logout" method="post" action="/admin/logout">
+        <span class="admin-sidebar__email">{{.Admin.Email}}</span>
+        <button type="submit" class="button button--text">Log out</button>
+      </form>
+    </nav>
+    <main class="admin-main">
+      {{template "content" .}}
+    </main>
+  </div>
+  {{else}}
+  <main class="admin-auth">
+    {{template "content" .}}
+  </main>
+  {{end}}
+  <script defer src="/static/js/admin.js"></script>
+</body>
+</html>{{end}}

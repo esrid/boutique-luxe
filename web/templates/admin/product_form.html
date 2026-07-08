@@ -1,0 +1,115 @@
+{{define "title"}}{{if .IsNew}}New product{{else}}Edit product{{end}} — Boutique Admin{{end}}
+{{define "content"}}
+<h1>{{if .IsNew}}New product{{else}}Edit product{{end}}</h1>
+{{if .FormError}}<p class="form-error">{{.FormError}}</p>{{end}}
+
+<form class="admin-form" method="post" action="{{if .IsNew}}/admin/products{{else}}/admin/products/{{.Product.ID}}{{end}}">
+  <label class="field">Title
+    <input type="text" name="title" value="{{.Product.Title}}" required>
+  </label>
+  <label class="field">Slug
+    <input type="text" name="slug" value="{{.Product.Slug}}" required>
+  </label>
+  <label class="field">Description
+    <textarea name="description" rows="4">{{.Product.Description}}</textarea>
+  </label>
+  <label class="field">Category
+    <select name="category_id">
+      <option value="">— none —</option>
+      {{$product := .Product}}
+      {{range .Categories}}
+      <option value="{{.ID}}" {{if isSelectedCategory $product.CategoryID .ID}}selected{{end}}>{{.Name}}</option>
+      {{end}}
+    </select>
+  </label>
+  <label class="field">Status
+    <select name="status">
+      <option value="draft" {{if eq .Product.Status "draft"}}selected{{end}}>Draft</option>
+      <option value="published" {{if eq .Product.Status "published"}}selected{{end}}>Published</option>
+    </select>
+  </label>
+  <button class="button button--primary" type="submit">Save</button>
+  <a class="button" href="/admin/products">Cancel</a>
+</form>
+
+{{if not .IsNew}}
+<section class="admin-section">
+  <h2>Variants</h2>
+  {{if .Product.Variants}}
+  <!-- <form> can't wrap <td> cells inside a <tr> (browsers foster-parent it
+       out of the table, breaking the field association), so each row's
+       forms are declared empty below the table and referenced via the
+       standard form="id" attribute on their fields instead. -->
+  <table class="admin-table">
+    <thead><tr><th>SKU</th><th>Name</th><th>Options</th><th>Price</th><th>Stock</th><th>Low-stock at</th><th></th></tr></thead>
+    <tbody>
+      {{range .Product.Variants}}
+      <tr>
+        <td><input form="variant-{{.ID}}" type="text" name="sku" value="{{.SKU}}" required></td>
+        <td><input form="variant-{{.ID}}" type="text" name="name" value="{{.Name}}" required></td>
+        <td><input form="variant-{{.ID}}" type="text" name="options" value="{{formatOptions .Options}}" placeholder="size=M, color=Red"></td>
+        <td><input form="variant-{{.ID}}" type="text" name="price" value="{{moneyPlain .PriceCents}}" required></td>
+        <td><input form="variant-{{.ID}}" type="number" name="stock_qty" value="{{.StockQty}}" min="0" required></td>
+        <td><input form="variant-{{.ID}}" type="number" name="low_stock_threshold" value="{{.LowStockThreshold}}" min="0"></td>
+        <td class="admin-table__actions">
+          <button form="variant-{{.ID}}" type="submit" class="button">Save</button>
+          <button form="variant-delete-{{.ID}}" type="submit" class="button button--text">Delete</button>
+        </td>
+      </tr>
+      {{end}}
+    </tbody>
+  </table>
+  {{range .Product.Variants}}
+  <form id="variant-{{.ID}}" method="post" action="/admin/products/{{$product.ID}}/variants/{{.ID}}"></form>
+  <form id="variant-delete-{{.ID}}" method="post" action="/admin/products/{{$product.ID}}/variants/{{.ID}}/delete" data-confirm="Delete this variant?"></form>
+  {{end}}
+  {{else}}
+  <p class="admin-placeholder">No variants yet — add one below.</p>
+  {{end}}
+
+  <form class="admin-form admin-form--inline" method="post" action="/admin/products/{{.Product.ID}}/variants">
+    <label class="field">SKU <input type="text" name="sku" required></label>
+    <label class="field">Name <input type="text" name="name" required></label>
+    <label class="field">Options <input type="text" name="options" placeholder="size=M, color=Red"></label>
+    <label class="field">Price <input type="text" name="price" placeholder="19.99" required></label>
+    <label class="field">Stock <input type="number" name="stock_qty" value="0" min="0" required></label>
+    <label class="field">Low-stock at <input type="number" name="low_stock_threshold" value="5" min="0"></label>
+    <button class="button button--primary" type="submit">Add variant</button>
+  </form>
+</section>
+
+<section class="admin-section">
+  <h2>Images</h2>
+  {{if .Product.Images}}
+  <div class="admin-image-grid">
+    {{range .Product.Images}}
+    <figure class="admin-image-grid__item">
+      <img src="{{.URL}}" alt="{{.Alt}}">
+      <figcaption>
+        <form method="post" action="/admin/products/{{$product.ID}}/images/{{.ID}}/move">
+          <input type="hidden" name="direction" value="up">
+          <button type="submit" class="button button--text">&uarr;</button>
+        </form>
+        <form method="post" action="/admin/products/{{$product.ID}}/images/{{.ID}}/move">
+          <input type="hidden" name="direction" value="down">
+          <button type="submit" class="button button--text">&darr;</button>
+        </form>
+        <form method="post" action="/admin/products/{{$product.ID}}/images/{{.ID}}/delete" data-confirm="Delete this image?">
+          <button type="submit" class="button button--text">Delete</button>
+        </form>
+      </figcaption>
+    </figure>
+    {{end}}
+  </div>
+  {{else}}
+  <p class="admin-placeholder">No images yet.</p>
+  {{end}}
+
+  <form class="admin-form" method="post" action="/admin/products/{{.Product.ID}}/images" enctype="multipart/form-data">
+    <label class="field">Add images <input type="file" name="images" accept="image/*" multiple required></label>
+    <label class="field">Alt text (applied to all uploaded in this batch) <input type="text" name="alt"></label>
+    <button class="button button--primary" type="submit">Upload</button>
+  </form>
+</section>
+{{end}}
+{{end}}

@@ -1,0 +1,40 @@
+{{define "title"}}Panier — Boutique{{end}}
+{{define "content"}}
+<h1>Votre panier</h1>
+{{if not .Cart.Items}}
+  <p class="empty-state">Votre panier est vide. <a href="/products">Continuer mes achats</a>.</p>
+{{else}}
+<table class="cart-table">
+  <thead>
+    <tr><th>Article</th><th>Prix</th><th>Qté</th><th>Total</th><th></th></tr>
+  </thead>
+  <tbody>
+    {{range .Cart.Items}}
+    <tr>
+      <td>
+        <a href="/products/{{.ProductSlug}}">{{.ProductTitle}}</a>
+        <div class="cart-table__variant">{{.VariantName}}</div>
+      </td>
+      <td>{{money .UnitPriceCents}}</td>
+      <td>
+        <form class="cart-table__qty-form" method="post" action="/cart/items/{{.VariantID}}">
+          <input type="number" name="qty" value="{{.Qty}}" min="1" max="{{.StockQty}}">
+          <button type="submit" class="button">Mettre à jour</button>
+        </form>
+      </td>
+      <td>{{money .LineTotalCents}}</td>
+      <td>
+        <form method="post" action="/cart/items/{{.VariantID}}/remove">
+          <button type="submit" class="button button--text">Supprimer</button>
+        </form>
+      </td>
+    </tr>
+    {{end}}
+  </tbody>
+</table>
+<div class="cart-summary">
+  <p class="cart-summary__total">Sous-total : {{money .Cart.SubtotalCents}}</p>
+  <a class="button button--primary" href="/checkout">Commander</a>
+</div>
+{{end}}
+{{end}}

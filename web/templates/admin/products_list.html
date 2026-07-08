@@ -1,0 +1,30 @@
+{{define "title"}}Products — Boutique Admin{{end}}
+{{define "content"}}
+<div class="admin-page-header">
+  <h1>Products</h1>
+  <a class="button button--primary" href="/admin/products/new">New product</a>
+</div>
+{{if not .Products}}
+  <p class="admin-placeholder">No products yet.</p>
+{{else}}
+<table class="admin-table">
+  <thead><tr><th>Title</th><th>Category</th><th>Status</th><th>Variants</th><th></th></tr></thead>
+  <tbody>
+    {{range .Products}}
+    <tr>
+      <td><a href="/admin/products/{{.ID}}/edit">{{.Title}}</a></td>
+      <td>{{if .CategoryName}}{{.CategoryName}}{{else}}—{{end}}</td>
+      <td><span class="badge badge--{{.Status}}">{{.Status}}</span></td>
+      <td>{{.VariantCount}}</td>
+      <td class="admin-table__actions">
+        <a href="/admin/products/{{.ID}}/edit">Edit</a>
+        <form method="post" action="/admin/products/{{.ID}}/delete" data-confirm="Delete this product and all its variants/images?">
+          <button type="submit" class="button button--text">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {{end}}
+  </tbody>
+</table>
+{{end}}
+{{end}}

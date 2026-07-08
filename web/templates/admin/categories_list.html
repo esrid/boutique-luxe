@@ -1,0 +1,28 @@
+{{define "title"}}Categories — Boutique Admin{{end}}
+{{define "content"}}
+<div class="admin-page-header">
+  <h1>Categories</h1>
+  <a class="button button--primary" href="/admin/categories/new">New category</a>
+</div>
+{{if not .Categories}}
+  <p class="admin-placeholder">No categories yet.</p>
+{{else}}
+<table class="admin-table">
+  <thead><tr><th>Name</th><th>Slug</th><th></th></tr></thead>
+  <tbody>
+    {{range .Categories}}
+    <tr>
+      <td>{{.Name}}</td>
+      <td>{{.Slug}}</td>
+      <td class="admin-table__actions">
+        <a href="/admin/categories/{{.ID}}/edit">Edit</a>
+        <form method="post" action="/admin/categories/{{.ID}}/delete" data-confirm="Delete this category?">
+          <button type="submit" class="button button--text">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {{end}}
+  </tbody>
+</table>
+{{end}}
+{{end}}

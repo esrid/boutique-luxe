@@ -1,0 +1,34 @@
+{{define "title"}}Inventory — Boutique Admin{{end}}
+{{define "content"}}
+<h1>Inventory</h1>
+{{if .FormError}}<p class="form-error">{{.FormError}}</p>{{end}}
+
+{{if not .Rows}}
+  <p class="admin-placeholder">No variants yet.</p>
+{{else}}
+<table class="admin-table">
+  <thead><tr><th>Product</th><th>Variant</th><th>SKU</th><th>Stock</th><th>Adjust</th></tr></thead>
+  <tbody>
+    {{range .Rows}}
+    <tr>
+      <td><a href="/admin/products/{{.ProductID}}/edit">{{.ProductTitle}}</a></td>
+      <td>{{.VariantName}}</td>
+      <td>{{.SKU}}</td>
+      <td>
+        {{if eq .StockQty 0}}<span class="badge badge--out">{{.StockQty}}</span>
+        {{else if .LowStock}}<span class="badge badge--low">{{.StockQty}}</span>
+        {{else}}{{.StockQty}}{{end}}
+      </td>
+      <td>
+        <form class="admin-inline-adjust" method="post" action="/admin/inventory/{{.VariantID}}/adjust">
+          <input type="number" name="delta" placeholder="+5 / -5" required>
+          <input type="text" name="reason" placeholder="Reason" required>
+          <button type="submit" class="button">Apply</button>
+        </form>
+      </td>
+    </tr>
+    {{end}}
+  </tbody>
+</table>
+{{end}}
+{{end}}

@@ -1,0 +1,51 @@
+{{define "title"}}{{.Product.Title}} — Boutique{{end}}
+{{define "content"}}
+<div class="product-detail">
+  <div class="product-detail__gallery">
+    {{if .Product.Images}}
+      <img class="product-detail__main-image" src="{{(index .Product.Images 0).URL}}" alt="{{(index .Product.Images 0).Alt}}">
+      {{if gt (len .Product.Images) 1}}
+      <div class="product-detail__thumbs">
+        {{range .Product.Images}}
+        <img src="{{.URL}}" alt="{{.Alt}}" loading="lazy">
+        {{end}}
+      </div>
+      {{end}}
+    {{end}}
+  </div>
+
+  <div class="product-detail__info">
+    <h1>{{.Product.Title}}</h1>
+    <p class="product-detail__description">{{.Product.Description}}</p>
+
+    <form method="post" action="/cart/items">
+      {{$selected := false}}
+      <fieldset class="variant-list">
+        <legend>Choisissez une option</legend>
+        {{range .Product.Variants}}
+        {{$checked := false}}
+        {{if and (not $selected) (gt .StockQty 0)}}{{$checked = true}}{{$selected = true}}{{end}}
+        <label class="variant-row {{if eq .StockQty 0}}variant-row--unavailable{{end}}">
+          <input type="radio" name="variant_id" value="{{.ID}}" required {{if $checked}}checked{{end}} {{if eq .StockQty 0}}disabled{{end}}>
+          <span class="variant-row__name">{{.Name}}</span>
+          <span class="variant-row__price">{{money .PriceCents}}</span>
+          {{if eq .StockQty 0}}
+            <span class="badge badge--out">Rupture de stock</span>
+          {{else if .LowStock}}
+            <span class="badge badge--low">Plus que {{.StockQty}} en stock</span>
+          {{end}}
+        </label>
+        {{end}}
+      </fieldset>
+
+      <label class="field">Quantité
+        <input type="number" name="qty" value="1" min="1">
+      </label>
+
+      <button class="button button--primary button--sticky" type="submit" {{if not $selected}}disabled title="Rupture de stock"{{end}}>
+        Ajouter au panier
+      </button>
+    </form>
+  </div>
+</div>
+{{end}}

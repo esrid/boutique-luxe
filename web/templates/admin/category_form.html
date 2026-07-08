@@ -1,0 +1,15 @@
+{{define "title"}}{{if .IsNew}}New category{{else}}Edit category{{end}} — Boutique Admin{{end}}
+{{define "content"}}
+<h1>{{if .IsNew}}New category{{else}}Edit category{{end}}</h1>
+{{if .FormError}}<p class="form-error">{{.FormError}}</p>{{end}}
+<form class="admin-form" method="post" action="{{if .IsNew}}/admin/categories{{else}}/admin/categories/{{.Category.ID}}{{end}}">
+  <label class="field">Name
+    <input type="text" name="name" value="{{.Category.Name}}" required>
+  </label>
+  <label class="field">Slug
+    <input type="text" name="slug" value="{{.Category.Slug}}" required>
+  </label>
+  <button class="button button--primary" type="submit">Save</button>
+  <a class="button" href="/admin/categories">Cancel</a>
+</form>
+{{end}}

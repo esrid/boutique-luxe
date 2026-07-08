@@ -1,0 +1,20 @@
+{{define "title"}}Boutique — Créations artisanales, prix justes{{end}}
+{{define "content"}}
+<section class="hero">
+  <h1>Boutique</h1>
+  <p class="hero__lede">Une petite boutique rapide, sans détour.</p>
+  <a class="button button--primary" href="/products">Acheter maintenant</a>
+</section>
+{{if .Collections}}
+<section class="categories-section">
+  <h2>Nos collections</h2>
+  <div class="category-grid">
+    {{range .Collections}}
+    <a class="category-card" href="/products?category={{.Slug}}">
+      <span class="category-card__name">{{.Name}}</span>
+    </a>
+    {{end}}
+  </div>
+</section>
+{{end}}
+{{end}}

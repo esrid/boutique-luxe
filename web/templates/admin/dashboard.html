@@ -1,0 +1,61 @@
+{{define "title"}}Dashboard — Boutique Admin{{end}}
+{{define "content"}}
+<h1>Dashboard</h1>
+
+<div class="stat-grid">
+  <div class="stat-tile">
+    <p class="stat-tile__label">Revenue today</p>
+    <p class="stat-tile__value">{{money .RevenueTodayCents}}</p>
+  </div>
+  <div class="stat-tile">
+    <p class="stat-tile__label">Revenue this week</p>
+    <p class="stat-tile__value">{{money .RevenueWeekCents}}</p>
+  </div>
+  <div class="stat-tile">
+    <p class="stat-tile__label">Total orders</p>
+    <p class="stat-tile__value">{{.OrderCount}}</p>
+  </div>
+</div>
+
+<section class="admin-section">
+  <h2>Low stock</h2>
+  {{if not .LowStock}}
+  <p class="admin-placeholder">Nothing low on stock.</p>
+  {{else}}
+  <table class="admin-table">
+    <thead><tr><th>Product</th><th>Variant</th><th>SKU</th><th>Stock</th></tr></thead>
+    <tbody>
+      {{range .LowStock}}
+      <tr>
+        <td><a href="/admin/products/{{.ProductID}}/edit">{{.ProductTitle}}</a></td>
+        <td>{{.VariantName}}</td>
+        <td>{{.SKU}}</td>
+        <td>{{if eq .StockQty 0}}<span class="badge badge--out">Out</span>{{else}}<span class="badge badge--low">{{.StockQty}}</span>{{end}}</td>
+      </tr>
+      {{end}}
+    </tbody>
+  </table>
+  {{end}}
+</section>
+
+<section class="admin-section">
+  <h2>Recent orders</h2>
+  {{if not .RecentOrders}}
+  <p class="admin-placeholder">No orders yet.</p>
+  {{else}}
+  <table class="admin-table">
+    <thead><tr><th>Order</th><th>Email</th><th>Status</th><th>Total</th></tr></thead>
+    <tbody>
+      {{range .RecentOrders}}
+      <tr>
+        <td><a href="/admin/orders/{{.ID}}">{{.OrderNumber}}</a></td>
+        <td>{{.Email}}</td>
+        <td><span class="badge badge--order-{{.Status}}">{{.Status}}</span></td>
+        <td>{{money .TotalCents}}</td>
+      </tr>
+      {{end}}
+    </tbody>
+  </table>
+  {{end}}
+</section>
+{{end}}

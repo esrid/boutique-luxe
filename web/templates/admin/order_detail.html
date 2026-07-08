@@ -1,0 +1,65 @@
+{{define "title"}}Order {{.Order.OrderNumber}} — Boutique Admin{{end}}
+{{define "content"}}
+<div class="admin-page-header">
+  <h1>{{.Order.OrderNumber}}</h1>
+  <span class="badge badge--order-{{.Order.Status}}">{{.Order.Status}}</span>
+</div>
+{{if .FormError}}<p class="form-error">{{.FormError}}</p>{{end}}
+
+<div class="order-detail-layout">
+  <div>
+    <h2>Items</h2>
+    <table class="admin-table">
+      <thead><tr><th>Product</th><th>Variant</th><th>Qty</th><th>Unit price</th><th>Total</th></tr></thead>
+      <tbody>
+        {{range .Order.Items}}
+        <tr>
+          <td>{{.ProductTitle}}</td>
+          <td>{{.VariantName}}</td>
+          <td>{{.Qty}}</td>
+          <td>{{money .UnitPriceCents}}</td>
+          <td>{{money .LineTotalCents}}</td>
+        </tr>
+        {{end}}
+      </tbody>
+    </table>
+    <p>Subtotal: {{money .Order.SubtotalCents}}</p>
+    {{if .Order.DiscountCents}}<p>Discount ({{.Order.DiscountCode}}): -{{money .Order.DiscountCents}}</p>{{end}}
+    <p class="order-detail__total">Total: {{money .Order.TotalCents}}</p>
+
+    <h2>Shipping</h2>
+    <p>
+      {{.Order.Shipping.Name}}<br>
+      {{.Order.Shipping.Line1}}<br>
+      {{.Order.Shipping.City}}, {{.Order.Shipping.PostalCode}}<br>
+      {{.Order.Shipping.Country}}
+    </p>
+    <p><strong>Email:</strong> {{.Order.Email}}</p>
+    <p><strong>Payment reference:</strong> {{if .Order.PaymentReference}}{{.Order.PaymentReference}}{{else}}—{{end}}</p>
+  </div>
+
+  <aside class="order-detail-actions">
+    {{if .NextStatuses}}
+    <form class="admin-form" method="post" action="/admin/orders/{{.Order.ID}}/status">
+      <label class="field">Update status
+        <select name="status">
+          {{range .NextStatuses}}
+          <option value="{{.}}">{{.}}</option>
+          {{end}}
+        </select>
+      </label>
+      <button class="button button--primary" type="submit">Update</button>
+    </form>
+    {{else}}
+    <p class="admin-placeholder">No further status transitions available.</p>
+    {{end}}
+
+    <form class="admin-form" method="post" action="/admin/orders/{{.Order.ID}}/tracking">
+      <label class="field">Tracking number
+        <input type="text" name="tracking_number" value="{{.Order.TrackingNumber}}">
+      </label>
+      <button class="button" type="submit">Save tracking</button>
+    </form>
+  </aside>
+</div>
+{{end}}

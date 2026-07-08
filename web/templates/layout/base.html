@@ -1,0 +1,27 @@
+{{define "layout"}}<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{block "title" .}}Boutique{{end}}</title>
+  <link rel="stylesheet" href="/static/css/tokens.css">
+  <link rel="stylesheet" href="/static/css/storefront.css">
+  {{block "head_extra" .}}{{end}}
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-header__brand" href="/">Boutique</a>
+    <nav class="site-header__nav">
+      <a href="/products">Boutique</a>
+      <a href="/cart">Panier{{if .CartCount}} ({{.CartCount}}){{end}}</a>
+    </nav>
+  </header>
+  <main class="site-main">
+    {{template "content" .}}
+  </main>
+  <footer class="site-footer">
+    <p>&copy; {{.Year}} Boutique</p>
+  </footer>
+  {{block "scripts" .}}{{end}}
+</body>
+</html>{{end}}

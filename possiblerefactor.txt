@@ -1,0 +1,42 @@
+Possible Refactorings & Library Standard Alignments (Go 1.27)
+===========================================================
+
+1. url.Values.Clone() (Go 1.27+) [IMPLEMENTED]
+----------------------------------------------
+- Location: internal/storefront/handlers.go (pageURL)
+- Description: Replaced `maps.Clone(q)` with the native `q.Clone()` method.
+- Benefit: Performs a deep copy of the map keys and slice values.
+
+2. strings.CutLast() (Go 1.27+) [IMPLEMENTED]
+----------------------------------------------
+- Location: internal/auth/token.go (Verify)
+- Description: Replaced strings.LastIndexByte split with strings.CutLast.
+- Benefit: Safer and cleaner implementation without manual slicing logic.
+
+3. http.NewCrossOriginProtection (Go 1.25+) [IN PROGRESS]
+-----------------------------------------------------------
+- Location: cmd/server/main.go
+- Description: Transition from custom CSRF middleware (internal/httpx/csrf.go) to the new built-in net/http Cross-Origin Protection.
+- Note: This is an excellent alignment with the standard library, but compilation is currently failing because the admin handlers (CategoriesList, CategoryNew, CategoryCreate, etc.) registered in cmd/server/main.go are not yet defined on the *admin.Handlers struct in internal/admin/handlers.go.
+
+4. Path Parameter Retrieval (Go 1.22+) [VALIDATED]
+---------------------------------------------------
+- Location: cmd/server/main.go & internal/storefront/handlers.go
+- Description: Standard library multiplexer (http.NewServeMux) pattern matching with path wildcards (e.g., /products/{slug}) and r.PathValue("slug") is correctly utilized. No third-party router is needed.
+
+5. Cryptographic Randomness [VALIDATED]
+----------------------------------------
+- Location: internal/auth/token.go (GenerateToken) & internal/order/store.go (NewOrderNumber)
+- Description: Using `crypto/rand` is correct and must not be replaced by `math/rand/v2` (introduced in Go 1.22) because these tokens are used for security purposes (session hashes and signatures).
+
+6. Native uuid Package (Go 1.27+) [FUTURE CONSIDERATION]
+---------------------------------------------------------
+- Location: go.mod
+- Description: The new built-in standard library `uuid` package can generate and parse UUIDs.
+- Benefit: Reduces future reliance on the external `github.com/google/uuid` module if direct UUID generation is added or once dependencies migrate to standard library UUIDs.
+
+7. encoding/json/v2 (Go 1.27+) [FUTURE CONSIDERATION]
+-------------------------------------------------------
+- Location: internal/catalog/store.go & internal/catalog/admin_store.go (options_json parsing)
+- Description: Change imports from `encoding/json` to `encoding/json/v2`.
+- Benefit: Standard library JSON parsing becomes significantly faster (specifically `Unmarshal`), with safer default validation (e.g., strict UTF-8 checking and rejecting duplicate keys in objects).

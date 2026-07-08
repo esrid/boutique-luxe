@@ -1,0 +1,35 @@
+{{define "title"}}Orders — Boutique Admin{{end}}
+{{define "content"}}
+<h1>Orders</h1>
+
+<form class="admin-filter-form" method="get" action="/admin/orders">
+  <label class="field">Status
+    <select name="status" data-autosubmit>
+      <option value="">All</option>
+      {{range .Statuses}}
+      <option value="{{.}}" {{if eq $.StatusFilter .}}selected{{end}}>{{.}}</option>
+      {{end}}
+    </select>
+  </label>
+  <button class="button" type="submit">Filter</button>
+</form>
+
+{{if not .Orders}}
+  <p class="admin-placeholder">No orders match this filter.</p>
+{{else}}
+<table class="admin-table">
+  <thead><tr><th>Order</th><th>Email</th><th>Status</th><th>Total</th><th>Placed</th></tr></thead>
+  <tbody>
+    {{range .Orders}}
+    <tr>
+      <td><a href="/admin/orders/{{.ID}}">{{.OrderNumber}}</a></td>
+      <td>{{.Email}}</td>
+      <td><span class="badge badge--order-{{.Status}}">{{.Status}}</span></td>
+      <td>{{money .TotalCents}}</td>
+      <td>{{.CreatedAt.Format "2006-01-02 15:04"}}</td>
+    </tr>
+    {{end}}
+  </tbody>
+</table>
+{{end}}
+{{end}}

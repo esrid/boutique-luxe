@@ -5,46 +5,48 @@
 :root {
   /* Color — monochrome radical */
   --color-bg: #ffffff;
-  --color-bg-alt: #f5f5f5;
-  --color-bg-elevated: #eeeeee;
+  --color-bg-alt: #fcfcfc;
+  --color-bg-elevated: #f5f5f5;
   --color-text: #000000;
-  --color-text-soft: #333333;
-  --color-text-muted: #999999;
+  --color-text-soft: #111111;
+  --color-text-muted: #777777;
   --color-accent: #000000;
   --color-accent-hover: #333333;
-  --color-accent-light: #cccccc;
-  --color-accent-bg: #f5f5f5;
+  --color-accent-light: #e5e5e5;
+  --color-accent-bg: #000000;
   --color-surface: #ffffff;
-  --color-surface-hover: #f5f5f5;
-  --color-border: #e5e5e5;
-  --color-danger: #cc0000;
+  --color-surface-hover: #fcfcfc;
+  --color-border: #e0e0e0;
+  --color-danger: #b30000;
   --color-success: #000000;
-  --color-warning: #999999;
-  --color-overlay: rgba(0, 0, 0, 0.3);
+  --color-warning: #777777;
+  --color-overlay: rgba(0, 0, 0, 0.15);
 
   /* Typography — sans-serif only, comme Zara */
   --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-  --text-xs: clamp(0.7rem, 0.65rem + 0.2vw, 0.8rem);
-  --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.9rem);
-  --text-base: clamp(0.9rem, 0.85rem + 0.3vw, 1rem);
-  --text-lg: clamp(1rem, 0.9rem + 0.4vw, 1.15rem);
-  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
-  --text-2xl: clamp(1.5rem, 1.3rem + 0.9vw, 2rem);
-  --text-3xl: clamp(2rem, 1.6rem + 1.5vw, 3rem);
-  --text-h1: clamp(1.8rem, 1.4rem + 1.8vw, 3.5rem);
-  --text-h2: clamp(1.4rem, 1.2rem + 1vw, 2.2rem);
-  --text-h3: clamp(1.1rem, 1rem + 0.5vw, 1.4rem);
-  --leading-tight: 1.1;
-  --leading-base: 1.4;
-  --leading-loose: 1.6;
-  --tracking-wide: 0.05em;
-  --tracking-wider: 0.1em;
+  --text-xs: 10px;
+  --text-sm: 11px;
+  --text-base: 13px;
+  --text-lg: 16px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 32px;
+  --text-h1: clamp(2.5rem, 6vw, 5.5rem); /* Gigantic display titles */
+  --text-h2: clamp(1.8rem, 4vw, 3rem);
+  --text-h3: clamp(1.2rem, 2vw, 1.8rem);
+  
+  --leading-tight: 1.0;
+  --leading-base: 1.35;
+  --leading-loose: 1.5;
+  --tracking-wide: 0.1em;
+  --tracking-wider: 0.15em;
+  --tracking-widest: 0.25em;
   --weight-light: 300;
   --weight-regular: 400;
   --weight-medium: 500;
-  --weight-bold: 600;
+  --weight-bold: 700;
 
   /* Spacing — 4px scale */
   --space-xs: 0.25rem;
@@ -52,10 +54,10 @@
   --space-md: 1rem;
   --space-lg: 1.5rem;
   --space-xl: 2rem;
-  --space-2xl: 3rem;
-  --space-3xl: 4rem;
-  --space-4xl: 6rem;
-  --space-5xl: 8rem;
+  --space-2xl: 3.5rem;
+  --space-3xl: 5rem;
+  --space-4xl: 7rem;
+  --space-5xl: 10rem;
 
   /* Shape — straight (Zara doesn't round corners) */
   --radius-sm: 0;
@@ -65,11 +67,11 @@
   --shadow-sm: none;
   --shadow-md: none;
   --shadow-lg: none;
-  --transition-base: 0.2s ease;
+  --transition-base: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Layout */
-  --content-max-width: 80rem;
-  --header-height: 4rem;
+  --content-max-width: 90rem; /* Wider display for luxury grid */
+  --header-height: 5.5rem;   /* Taller header for editorial brand placement */
 
   /* Aliases for frontend-engineer variable names */
   --font-body: var(--font-sans);
@@ -77,7 +79,7 @@
   --leading-relaxed: var(--leading-loose);
   --content-max: var(--content-max-width);
   --content-gutter: var(--space-xl);
-  --content-narrow: 48rem;
+  --content-narrow: 50rem;
   --color-border-light: var(--color-border);
   --space-section: var(--space-4xl);
 }

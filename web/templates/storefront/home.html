@@ -2,12 +2,12 @@
 {{define "content"}}
 <!-- Hero — full-bleed editorial image -->
 <section class="maison-hero maison-hero--full">
-  <div class="maison-hero__visual"></div>
+  <div class="maison-hero__visual" style="background-image: url('/static/img/hero.jpg'); background-size: cover; background-position: center;"></div>
   <div class="maison-hero__content">
     <p class="maison-hero__tagline">Nouvelle collection</p>
     <h1 class="maison-hero__title">L'élégance silencieuse.</h1>
     <p class="maison-hero__sub">Des lignes pures, des matières qui durent.</p>
-    <a class="maison-btn maison-btn--filled maison-btn--large" href="/products?sort=newest">Découvrir</a>
+    <a class="maison-btn maison-btn--editorial" href="/products?sort=newest">Découvrir</a>
   </div>
 </section>
 
@@ -17,9 +17,15 @@
   <div class="maison-collection-grid">
     {{range .Collections}}
     <a class="maison-collection-card" href="/products?category={{.Slug}}">
-      <div class="maison-collection-card__image">
+      {{if eq .Slug "apparel"}}
+        <img src="/static/img/product-2.jpg" alt="{{.Name}}" loading="lazy">
+      {{else if eq .Slug "accessories"}}
+        <img src="/static/img/product-1.jpg" alt="{{.Name}}" loading="lazy">
+      {{else if eq .Slug "home"}}
+        <img src="/static/img/product-3.jpg" alt="{{.Name}}" loading="lazy">
+      {{else}}
         <div class="maison-collection-card__placeholder"></div>
-      </div>
+      {{end}}
       <span class="maison-collection-card__name">{{.Name}}</span>
     </a>
     {{end}}
@@ -35,10 +41,18 @@
   </div>
   <div class="maison-product-strip">
     {{range .Collections}}
-    <div class="maison-product-strip__item">
-      <div class="maison-product-strip__image"></div>
+    <a class="maison-product-strip__item" href="/products?category={{.Slug}}">
+      <div class="maison-product-strip__image">
+        {{if eq .Slug "apparel"}}
+          <img src="/static/img/product-2.jpg" alt="{{.Name}}" loading="lazy">
+        {{else if eq .Slug "accessories"}}
+          <img src="/static/img/product-1.jpg" alt="{{.Name}}" loading="lazy">
+        {{else if eq .Slug "home"}}
+          <img src="/static/img/product-3.jpg" alt="{{.Name}}" loading="lazy">
+        {{end}}
+      </div>
       <p class="maison-product-strip__label">{{.Name}}</p>
-    </div>
+    </a>
     {{end}}
   </div>
 </section>

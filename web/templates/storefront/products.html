@@ -1,5 +1,6 @@
 {{define "title"}}MAISON — {{if .Filter.CategorySlug}}{{.Filter.CategorySlug}}{{else}}Toutes les pièces{{end}}{{end}}
 {{define "content"}}
+<div class="maison-layout">
 <!-- Breadcrumb -->
 <nav class="maison-breadcrumb" aria-label="Fil d'Ariane">
   <a href="/">Accueil</a>
@@ -79,4 +80,5 @@
   {{if .NextURL}}<a class="maison-pagination__link maison-pagination__link--next" href="{{.NextURL}}">Suivant →</a>{{end}}
 </nav>
 {{end}}
+</div>
 {{end}}

@@ -123,6 +123,28 @@ body:not(:has(.maison-hero--full)) .maison-navbar__brand {
   justify-content: center;
 }
 
+@media (max-width: 768px) {
+  .maison-navbar {
+    padding-inline: var(--space-md);
+  }
+  
+  .maison-navbar__center {
+    display: none;
+  }
+  
+  body:has(.maison-hero--full) .maison-navbar__brand {
+    color: var(--color-text); /* Fallback to black on mobile for visibility */
+  }
+  
+  body:has(.maison-hero--full) .maison-navbar__icon {
+    color: var(--color-text-soft); /* Fallback to black icons on mobile */
+  }
+  
+  .maison-navbar__actions {
+    gap: var(--space-sm);
+  }
+}
+
 .maison-navbar__link {
   font-family: var(--font-body);
   font-weight: var(--weight-regular);

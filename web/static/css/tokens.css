@@ -1,117 +1,91 @@
 /*
  * MAISON — Design Tokens
- * Luxury editorial e-commerce.
- * Toutes les couleurs en OKLCH. Aucun #fff / #000 / white / black.
- * Déclaré sur :root — premier fichier CSS chargé.
+ * Zara-inspired. Pure black & white, sans-serif. The UI is invisible.
  */
-
 :root {
-  /* ═══════════════════════════════════════════════
-     COULEURS — Palette OKLCH
-     ═══════════════════════════════════════════════ */
+  /* Color — monochrome radical */
+  --color-bg: #ffffff;
+  --color-bg-alt: #f5f5f5;
+  --color-bg-elevated: #eeeeee;
+  --color-text: #000000;
+  --color-text-soft: #333333;
+  --color-text-muted: #999999;
+  --color-accent: #000000;
+  --color-accent-hover: #333333;
+  --color-accent-light: #cccccc;
+  --color-accent-bg: #f5f5f5;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f5f5f5;
+  --color-border: #e5e5e5;
+  --color-danger: #cc0000;
+  --color-success: #000000;
+  --color-warning: #999999;
+  --color-overlay: rgba(0, 0, 0, 0.3);
 
-  /* ── Fond ────────────────────────────────── */
-  --color-bg:           oklch(0.97 0.008 90);  /* Blanc cassé chaud — fond principal */
-  --color-bg-alt:       oklch(0.94 0.012 85);  /* Beige très clair — fond secondaire (hero, cartes) */
-  --color-bg-elevated:  oklch(0.92 0.015 82);  /* Beige doux — hover, surfaces élevées */
+  /* Typography — sans-serif only, comme Zara */
+  --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-  /* ── Texte ───────────────────────────────── */
-  --color-text:         oklch(0.13 0.02 270);  /* Charbon profond (presque noir mais chaud) */
-  --color-text-soft:    oklch(0.35 0.025 260); /* Gris foncé chaud — meta, labels secondaires */
-  --color-text-muted:   oklch(0.55 0.025 250); /* Gris moyen — placeholder, discret */
-
-  /* ── Accent Or / Champagne ───────────────── */
-  --color-accent:           oklch(0.72 0.11 68);  /* Or champagne — boutons, liens, accents */
-  --color-accent-hover:     oklch(0.62 0.12 68);  /* Or plus profond — hover */
-  --color-accent-light:     oklch(0.82 0.06 70);  /* Or clair — badges, tags */
-  --color-accent-bg:        oklch(0.92 0.03 72);  /* Fond teinté or très léger */
-
-  /* ── Surfaces / Conteneurs ───────────────── */
-  --color-surface:        oklch(0.96 0.006 85);  /* Fond de carte, modale */
-  --color-surface-hover:  oklch(0.93 0.01 83);  /* Hover sur carte */
-  --color-border:         oklch(0.85 0.012 80); /* Bordures fines */
-  --color-border-light:   oklch(0.90 0.008 82); /* Bordures très légères */
-
-  /* ── États ───────────────────────────────── */
-  --color-error:    oklch(0.55 0.15 25);  /* Rouge profond terreux */
-  --color-success:  oklch(0.60 0.10 145); /* Vert sauge discret */
-  --color-info:     oklch(0.60 0.08 240); /* Bleu pâle minéral */
-
-  /* ── Overlay ──────────────────────────────── */
-  --color-overlay: oklch(0 0 0 / 0.35);   /* Voile sombre pour modales */
-
-
-  /* ═══════════════════════════════════════════════
-     TYPOGRAPHIE
-     ═══════════════════════════════════════════════ */
-
-  --font-display: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
-  --font-body:    'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif;
-
-  /* Échelle typographique fluide */
-  --text-caption:  clamp(0.6875rem, 0.9vw, 0.8125rem);
-  --text-small:    clamp(0.8125rem, 1vw, 0.9375rem);
-  --text-body:     clamp(0.9375rem, 1.2vw, 1.125rem);
-  --text-nav:      clamp(0.8125rem, 1.2vw, 1rem);
-  --text-btn:      clamp(0.8125rem, 1.2vw, 1rem);
-  --text-h4:       clamp(0.875rem, 1.2vw, 1rem);
-  --text-h3:       clamp(1.125rem, 1.8vw, 1.5rem);
-  --text-h2:       clamp(1.75rem, 3vw, 2.75rem);
-  --text-h1:       clamp(2.5rem, 5vw, 4.5rem);
-
-  /* Hauteur de ligne */
-  --leading-tight:   1.1;
-  --leading-normal:  1.5;
-  --leading-relaxed: 1.7;
-
-  /* Épaisseurs */
-  --weight-light:   300;
+  --text-xs: clamp(0.7rem, 0.65rem + 0.2vw, 0.8rem);
+  --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.9rem);
+  --text-base: clamp(0.9rem, 0.85rem + 0.3vw, 1rem);
+  --text-lg: clamp(1rem, 0.9rem + 0.4vw, 1.15rem);
+  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.3rem + 0.9vw, 2rem);
+  --text-3xl: clamp(2rem, 1.6rem + 1.5vw, 3rem);
+  --text-h1: clamp(1.8rem, 1.4rem + 1.8vw, 3.5rem);
+  --text-h2: clamp(1.4rem, 1.2rem + 1vw, 2.2rem);
+  --text-h3: clamp(1.1rem, 1rem + 0.5vw, 1.4rem);
+  --leading-tight: 1.1;
+  --leading-base: 1.4;
+  --leading-loose: 1.6;
+  --tracking-wide: 0.05em;
+  --tracking-wider: 0.1em;
+  --weight-light: 300;
   --weight-regular: 400;
-  --weight-medium:  500;
-  --weight-bold:    700;
+  --weight-medium: 500;
+  --weight-bold: 600;
 
-  /* Tracking (letter-spacing) */
-  --tracking-tight:   -0.02em;
-  --tracking-normal:  0;
-  --tracking-wide:    0.02em;
-  --tracking-wider:   0.04em;
-  --tracking-widest:  0.06em;
+  /* Spacing — 4px scale */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+  --space-5xl: 8rem;
 
+  /* Shape — straight (Zara doesn't round corners) */
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-full: 0;
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --transition-base: 0.2s ease;
 
-  /* ═══════════════════════════════════════════════
-     ESPACEMENT & RAYON
-     ═══════════════════════════════════════════════ */
+  /* Layout */
+  --content-max-width: 80rem;
+  --header-height: 4rem;
+}
 
-  --space-xs:  0.25rem;
-  --space-sm:  0.5rem;
-  --space-md:  1rem;
-  --space-lg:  1.5rem;
-  --space-xl:  2.5rem;
-  --space-2xl: 4rem;
-  --space-3xl: 6rem;
-
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 8px;
-  --radius-full: 9999px;
-
-
-  /* ═══════════════════════════════════════════════
-     OMBRES
-     ═══════════════════════════════════════════════ */
-
-  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.04);
-  --shadow-md: 0 2px 8px oklch(0 0 0 / 0.06);
-  --shadow-lg: 0 4px 24px oklch(0 0 0 / 0.08);
-  --shadow-xl: 0 8px 48px oklch(0 0 0 / 0.10);
-
-
-  /* ═══════════════════════════════════════════════
-     LAYOUT
-     ═══════════════════════════════════════════════ */
-
-  --content-max: 1440px;
-  --content-narrow: 720px;
-  --content-gutter: clamp(1rem, 3vw, 3rem);
-  --header-height: 4.5rem;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #000000;
+    --color-bg-alt: #111111;
+    --color-bg-elevated: #222222;
+    --color-text: #ffffff;
+    --color-text-soft: #cccccc;
+    --color-text-muted: #777777;
+    --color-accent: #ffffff;
+    --color-accent-hover: #cccccc;
+    --color-accent-light: #444444;
+    --color-accent-bg: #111111;
+    --color-surface: #111111;
+    --color-surface-hover: #222222;
+    --color-border: #333333;
+  }
 }

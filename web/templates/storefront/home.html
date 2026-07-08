@@ -1,72 +1,45 @@
-{{define "title"}}MAISON — L'élégance silencieuse{{end}}
+{{define "title"}}MAISON — Nouvelle collection{{end}}
 {{define "content"}}
-<!-- Hero -->
+<!-- Hero — full-bleed editorial image -->
 <section class="maison-hero maison-hero--full">
-  <!-- Hero visual via CSS gradient (no image dependency) -->
   <div class="maison-hero__visual"></div>
   <div class="maison-hero__content">
-    <h1 class="maison-hero__tagline">L'élégance silencieuse.</h1>
-    <p class="maison-hero__sub">Des lignes pures, des matières qui durent. Découvrez notre nouvelle collection.</p>
-    <a class="maison-btn maison-btn--filled maison-btn--large" href="/products?sort=newest">Découvrir la collection</a>
+    <p class="maison-hero__tagline">Nouvelle collection</p>
+    <h1 class="maison-hero__title">L'élégance silencieuse.</h1>
+    <p class="maison-hero__sub">Des lignes pures, des matières qui durent.</p>
+    <a class="maison-btn maison-btn--filled maison-btn--large" href="/products?sort=newest">Découvrir</a>
   </div>
 </section>
 
-<!-- Collections -->
+<!-- Categories grid — Zara style -->
 {{if .Collections}}
 <section class="maison-section">
-  <header class="maison-section__header">
-    <h2 class="maison-section__title">Nos collections</h2>
-  </header>
   <div class="maison-collection-grid">
     {{range .Collections}}
     <a class="maison-collection-card" href="/products?category={{.Slug}}">
-      <div class="maison-collection-card__overlay">
-        <h3 class="maison-collection-card__name">{{.Name}}</h3>
+      <div class="maison-collection-card__image">
+        <div class="maison-collection-card__placeholder"></div>
       </div>
+      <span class="maison-collection-card__name">{{.Name}}</span>
     </a>
     {{end}}
   </div>
 </section>
 {{end}}
 
-<!-- Valeurs -->
-<section class="maison-values maison-section">
-  <header class="maison-section__header">
-    <h2 class="maison-section__title">Notre philosophie</h2>
-    <p class="maison-section__description">Moins, mais mieux. Chaque pièce a une histoire.</p>
-  </header>
-  <div class="maison-values__grid maison-layout">
-    <div class="maison-value">
-      <div class="maison-value__icon">
-        <svg viewBox="0 0 48 48"><path d="M24 8C18.5 8 14 12.5 14 18c0 5.5 4.5 10 10 10s10-4.5 10-10c0-5.5-4.5-10-10-10z"/><path d="M10 40c0-7.7 6.3-14 14-14s14 6.3 14 14"/></svg>
-      </div>
-      <h3 class="maison-value__title">Artisanat</h3>
-      <p class="maison-value__text">Des pièces confectionnées à la main par des artisans d'exception, dans des ateliers qui perpétuent un savoir-faire unique.</p>
-    </div>
-    <div class="maison-value">
-      <div class="maison-value__icon">
-        <svg viewBox="0 0 48 48"><path d="M24 6v36"/><path d="M10 24h28"/><circle cx="24" cy="24" r="18"/></svg>
-      </div>
-      <h3 class="maison-value__title">Matières nobles</h3>
-      <p class="maison-value__text">Soie sauvage, lin biologique, cachemire certifié. Nous sélectionnons les plus beaux tissus pour leur toucher et leur tenue.</p>
-    </div>
-    <div class="maison-value">
-      <div class="maison-value__icon">
-        <svg viewBox="0 0 48 48"><path d="M12 38V18l12-8 12 8v20"/><path d="M8 38h32"/></svg>
-      </div>
-      <h3 class="maison-value__title">Intemporalité</h3>
-      <p class="maison-value__text">Des silhouettes intemporelles qui traversent les saisons. Une garde-robe durable, pensée pour durer.</p>
-    </div>
+<!-- Featured editorial — clean product strip -->
+<section class="maison-section">
+  <div class="maison-section__header">
+    <h2 class="maison-section__title">Les essentiels</h2>
+    <a class="maison-section__link" href="/products">Voir tout</a>
   </div>
-</section>
-
-<!-- Newsletter -->
-<section class="maison-newsletter">
-  <h2 class="maison-newsletter__title">Restez inspiré</h2>
-  <p class="maison-newsletter__text">Recevez nos nouvelles collections et nos éditions limitées en avant-première.</p>
-  <form class="maison-newsletter__form" method="post" action="/newsletter">
-    <input class="maison-newsletter__input" type="email" name="email" placeholder="Votre adresse email" required>
-    <button class="maison-btn maison-btn--filled" type="submit">S'abonner</button>
-  </form>
+  <div class="maison-product-strip">
+    {{range .Collections}}
+    <div class="maison-product-strip__item">
+      <div class="maison-product-strip__image"></div>
+      <p class="maison-product-strip__label">{{.Name}}</p>
+    </div>
+    {{end}}
+  </div>
 </section>
 {{end}}

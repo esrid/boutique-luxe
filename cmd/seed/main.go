@@ -80,9 +80,9 @@ func seedAdmin(ctx context.Context, conn *sql.DB) error {
 func seed(ctx context.Context, conn *sql.DB) error {
 	categories := map[string]int64{}
 	for _, c := range []struct{ slug, name string }{
-		{"apparel", "Apparel"},
-		{"home", "Home"},
-		{"accessories", "Accessories"},
+		{"apparel", "Vêtements"},
+		{"home", "Maison"},
+		{"accessories", "Accessoires"},
 	} {
 		res, err := conn.ExecContext(ctx,
 			`INSERT INTO categories (slug, name) VALUES (?, ?) ON CONFLICT(slug) DO UPDATE SET name = excluded.name`,
@@ -104,18 +104,9 @@ func seed(ctx context.Context, conn *sql.DB) error {
 
 	products := []seedProduct{
 		{
-			slug: "canvas-tote", title: "Canvas Tote", category: "accessories",
-			description: "Heavyweight cotton canvas tote with reinforced straps. Fits a laptop, groceries, or both.",
-			images:      []string{"/static/img/placeholder-1.svg"},
-			variants: []seedVariant{
-				{"TOTE-NAT", "Natural", map[string]string{"color": "Natural"}, 3200, 40},
-				{"TOTE-BLK", "Black", map[string]string{"color": "Black"}, 3200, 12},
-			},
-		},
-		{
-			slug: "linen-shirt", title: "Linen Shirt", category: "apparel",
-			description: "Relaxed-fit linen shirt, garment-washed for softness. Runs true to size.",
-			images:      []string{"/static/img/placeholder-2.svg"},
+			slug: "linen-shirt", title: "Chemise en Lin", category: "apparel",
+			description: "Coupe décontractée, lin lavé pour une douceur incomparable. Taille normale.",
+			images:      []string{"/static/img/product-2.jpg"},
 			variants: []seedVariant{
 				{"SHIRT-S", "Small", map[string]string{"size": "S"}, 6800, 8},
 				{"SHIRT-M", "Medium", map[string]string{"size": "M"}, 6800, 3},
@@ -123,9 +114,18 @@ func seed(ctx context.Context, conn *sql.DB) error {
 			},
 		},
 		{
-			slug: "ceramic-mug", title: "Ceramic Mug", category: "home",
-			description: "Hand-glazed stoneware mug, 12oz. Microwave and dishwasher safe.",
-			images:      []string{"/static/img/placeholder-3.svg"},
+			slug: "canvas-tote", title: "Sac Cabas", category: "accessories",
+			description: "Cabas en coton épais à bandoulières renforcées. Pour votre quotidien.",
+			images:      []string{"/static/img/product-1.jpg"},
+			variants: []seedVariant{
+				{"TOTE-NAT", "Naturel", map[string]string{"color": "Naturel"}, 3200, 40},
+				{"TOTE-BLK", "Noir", map[string]string{"color": "Noir"}, 3200, 12},
+			},
+		},
+		{
+			slug: "ceramic-mug", title: "Tasse Céramique", category: "home",
+			description: "Tasse en grès émaillé à la main, 35cl. Passe au micro-ondes et au lave-vaisselle.",
+			images:      []string{"/static/img/product-3.jpg"},
 			variants: []seedVariant{
 				{"MUG-STD", "Standard", map[string]string{}, 1800, 60},
 			},

@@ -329,10 +329,10 @@ a:hover {
 
 .maison-btn--ghost {
   background: transparent;
-  color: var(--color-text-soft);
+  color: var(--color-text-muted);
   padding: var(--space-xs) var(--space-sm);
   font-weight: var(--weight-regular);
-  font-size: var(--text-small);
+  font-size: var(--text-sm);
   letter-spacing: var(--tracking-wider);
 }
 

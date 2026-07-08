@@ -1,8 +1,8 @@
-{{define "title"}}Admin login — Boutique{{end}}
+{{define "title"}}Admin login — MAISON{{end}}
 {{define "content"}}
 <form class="admin-login-form" method="post" action="/admin/login">
   <input type="hidden" name="next" value="{{.Next}}">
-  <h1>Boutique Admin</h1>
+  <h1>MAISON Admin</h1>
   {{if .FormError}}<p class="form-error">{{.FormError}}</p>{{end}}
   <label class="field">Email
     <input type="email" name="email" required autofocus>

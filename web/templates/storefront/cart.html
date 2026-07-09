@@ -10,6 +10,17 @@
     <a class="maison-btn maison-btn--outline" href="/products">Continuer mes achats</a>
   </div>
   {{else}}
+
+  <!-- Free shipping progress bar -->
+  <div class="maison-shipping-bar" id="shipping-bar">
+    <p class="maison-shipping-bar__message" id="shipping-msg">
+      Plus que <span id="shipping-remaining"></span> pour la livraison gratuite
+    </p>
+    <div class="maison-shipping-bar__track">
+      <div class="maison-shipping-bar__fill" id="shipping-fill" style="width:0%"></div>
+    </div>
+  </div>
+
   <div class="maison-cart__items">
     {{range .Cart.Items}}
     <div class="maison-cart-item">
@@ -19,7 +30,11 @@
         <p class="maison-cart-item__variant">{{.VariantName}}</p>
         <div class="maison-cart-item__actions">
           <form class="maison-cart-item__qty-form" method="post" action="/cart/items/{{.VariantID}}">
-            <input type="number" class="maison-cart-item__qty" name="qty" value="{{.Qty}}" min="1" max="{{.StockQty}}">
+            <div class="maison-qty-control" data-qty-value="{{.Qty}}" data-qty-min="1" data-qty-max="{{.StockQty}}">
+              <button type="button" class="maison-qty-control__btn" data-action="minus" {{if le .Qty 1}}disabled{{end}}>−</button>
+              <input type="number" class="maison-qty-control__input" name="qty" value="{{.Qty}}" min="1" max="{{.StockQty}}" readonly>
+              <button type="button" class="maison-qty-control__btn" data-action="plus" {{if ge .Qty .StockQty}}disabled{{end}}>+</button>
+            </div>
             <button class="maison-btn maison-btn--ghost" type="submit">Màj</button>
           </form>
           <form method="post" action="/cart/items/{{.VariantID}}/remove">
@@ -58,4 +73,46 @@
   {{end}}
 </div>
 </div>
+
+<script>
+(function(){
+  /* Shipping progress bar */
+  var subtotal = {{.Cart.SubtotalCents}};
+  var threshold = 10000;
+  var remaining = Math.max(0, threshold - subtotal);
+  var pct = Math.min(100, Math.round((subtotal / threshold) * 100));
+  var fill = document.getElementById('shipping-fill');
+  var msg = document.getElementById('shipping-msg');
+  var remEl = document.getElementById('shipping-remaining');
+  if (fill && msg && remEl) {
+    fill.style.width = pct + '%';
+    if (remaining <= 0) {
+      fill.classList.add('maison-shipping-bar__fill--complete');
+      msg.classList.add('maison-shipping-bar__message--reached');
+      msg.textContent = 'Livraison offerte !';
+    } else {
+      remEl.textContent = (remaining / 100).toFixed(2).replace('.', ',') + ' €';
+    }
+  }
+
+  /* Quantity +/- buttons */
+  document.querySelectorAll('.maison-qty-control').forEach(function(ctrl) {
+    var input = ctrl.querySelector('.maison-qty-control__input');
+    var minus = ctrl.querySelector('[data-action="minus"]');
+    var plus = ctrl.querySelector('[data-action="plus"]');
+    if (!input || !minus || !plus) return;
+    var min = parseInt(input.min) || 1;
+    var max = parseInt(input.max) || 99;
+
+    minus.addEventListener('click', function() {
+      var v = parseInt(input.value) || min;
+      if (v > min) { v--; input.value = v; minus.disabled = (v <= min); plus.disabled = (v >= max); }
+    });
+    plus.addEventListener('click', function() {
+      var v = parseInt(input.value) || min;
+      if (v < max) { v++; input.value = v; minus.disabled = (v <= min); plus.disabled = (v >= max); }
+    });
+  });
+})();
+</script>
 {{end}}

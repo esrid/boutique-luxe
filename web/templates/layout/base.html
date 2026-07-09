@@ -14,13 +14,67 @@
   {{block "head_extra" .}}{{end}}
 </head>
 <body>
+  <!-- Hamburger menu toggle (hidden checkbox for pure CSS) -->
+  <input type="checkbox" id="menu-toggle" class="maison-menu-toggle" hidden>
+
   <header class="maison-navbar">
+    <!-- Hamburger icon (mobile only) -->
+    <label for="menu-toggle" class="maison-navbar__hamburger" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+
     <a class="maison-navbar__brand" href="/">MAISON</a>
     <nav class="maison-navbar__center">
       <a class="maison-navbar__link" href="/products?sort=newest">Nouveautés</a>
-      <a class="maison-navbar__link" href="/products?category=femme">Femme</a>
-      <a class="maison-navbar__link" href="/products?category=homme">Homme</a>
-      <a class="maison-navbar__link" href="/products">Collections</a>
+
+      <!-- Femme mega-menu -->
+      <span class="maison-navbar__link maison-navbar__link--has-dropdown">
+        <a class="maison-navbar__link" href="/products?category=femme" style="display:inline;">Femme</a>
+        <div class="maison-mega-menu">
+          <img class="maison-mega-menu__image" src="/static/img/product-2.jpg" alt="Femme" loading="lazy">
+          <div class="maison-mega-menu__links">
+            <p class="maison-mega-menu__title">Femme</p>
+            <a class="maison-mega-menu__link" href="/products?category=femme">Voir tout</a>
+            <a class="maison-mega-menu__link" href="/products?category=femme&subcategory=robes">Robes</a>
+            <a class="maison-mega-menu__link" href="/products?category=femme&subcategory=chemisiers">Chemisiers</a>
+            <a class="maison-mega-menu__link" href="/products?category=femme&subcategory=pantalons">Pantalons</a>
+            <a class="maison-mega-menu__link" href="/products?category=femme&subcategory=accessoires">Accessoires</a>
+          </div>
+        </div>
+      </span>
+
+      <!-- Homme mega-menu -->
+      <span class="maison-navbar__link maison-navbar__link--has-dropdown">
+        <a class="maison-navbar__link" href="/products?category=homme" style="display:inline;">Homme</a>
+        <div class="maison-mega-menu">
+          <img class="maison-mega-menu__image" src="/static/img/product-1.jpg" alt="Homme" loading="lazy">
+          <div class="maison-mega-menu__links">
+            <p class="maison-mega-menu__title">Homme</p>
+            <a class="maison-mega-menu__link" href="/products?category=homme">Voir tout</a>
+            <a class="maison-mega-menu__link" href="/products?category=homme&subcategory=chemises">Chemises</a>
+            <a class="maison-mega-menu__link" href="/products?category=homme&subcategory=pantalons">Pantalons</a>
+            <a class="maison-mega-menu__link" href="/products?category=homme&subcategory=vestes">Vestes</a>
+            <a class="maison-mega-menu__link" href="/products?category=homme&subcategory=accessoires">Accessoires</a>
+          </div>
+        </div>
+      </span>
+
+      <!-- Collections mega-menu -->
+      <span class="maison-navbar__link maison-navbar__link--has-dropdown">
+        <a class="maison-navbar__link" href="/products" style="display:inline;">Collections</a>
+        <div class="maison-mega-menu">
+          <img class="maison-mega-menu__image" src="/static/img/product-3.jpg" alt="Collections" loading="lazy">
+          <div class="maison-mega-menu__links">
+            <p class="maison-mega-menu__title">Collections</p>
+            <a class="maison-mega-menu__link" href="/products?sort=newest">Nouveautés</a>
+            <a class="maison-mega-menu__link" href="/products?category=apparel">Prêt-à-porter</a>
+            <a class="maison-mega-menu__link" href="/products?category=accessories">Accessoires</a>
+            <a class="maison-mega-menu__link" href="/products?category=home">Maison</a>
+          </div>
+        </div>
+      </span>
     </nav>
     <div class="maison-navbar__actions">
       <a class="maison-navbar__icon" href="/orders/lookup" aria-label="Rechercher">
@@ -32,6 +86,23 @@
       </a>
     </div>
   </header>
+
+  <!-- Mobile sidebar -->
+  <aside class="maison-sidebar">
+    <label for="menu-toggle" class="maison-sidebar__close" aria-label="Fermer">✕</label>
+    <nav class="maison-sidebar__nav">
+      <a class="maison-sidebar__link" href="/">Accueil</a>
+      <a class="maison-sidebar__link" href="/products?sort=newest">Nouveautés</a>
+      <div class="maison-sidebar__divider"></div>
+      <a class="maison-sidebar__link" href="/products?category=femme">Femme</a>
+      <a class="maison-sidebar__link" href="/products?category=homme">Homme</a>
+      <a class="maison-sidebar__link" href="/products">Collections</a>
+      <div class="maison-sidebar__divider"></div>
+      <a class="maison-sidebar__link" href="/cart">Panier</a>
+      <a class="maison-sidebar__link" href="/orders/lookup">Suivi de commande</a>
+    </nav>
+  </aside>
+  <label for="menu-toggle" class="maison-sidebar__overlay" aria-hidden="true"></label>
 
   <main class="site-main">
     {{template "content" .}}

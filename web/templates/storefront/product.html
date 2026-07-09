@@ -3,9 +3,9 @@
 <div class="maison-layout">
 <nav class="maison-breadcrumb" aria-label="Fil d'Ariane">
   <a href="/">Accueil</a>
-  <span class="maison-breadcrumb__sep">/</span>
+  <span class="maison-breadcrumb__sep">›</span>
   <a href="/products">Toutes les pièces</a>
-  <span class="maison-breadcrumb__sep">/</span>
+  <span class="maison-breadcrumb__sep">›</span>
   <span>{{.Product.Title}}</span>
 </nav>
 
@@ -68,4 +68,29 @@
   </div>
 </div>
 </div>
+
+<!-- Sticky add-to-cart (mobile only) -->
+<div class="maison-sticky-atc" id="sticky-atc" aria-hidden="true">
+  <div class="maison-sticky-atc__info">
+    <p class="maison-sticky-atc__name">{{.Product.Title}}</p>
+    <p class="maison-sticky-atc__price">{{money (index .Product.Variants 0).PriceCents}}</p>
+  </div>
+  <button class="maison-btn maison-btn--filled" type="button" onclick="document.querySelector('.maison-product-detail__form button[type=submit]').click()">
+    Ajouter au panier
+  </button>
+</div>
+
+<script>
+(function(){
+  var bar = document.getElementById('sticky-atc');
+  var gallery = document.querySelector('.maison-product-detail__gallery');
+  if (!bar || !gallery) return;
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      bar.classList.toggle('maison-sticky-atc--visible', !e.isIntersecting && window.innerWidth < 769);
+    });
+  }, { threshold: 0 });
+  observer.observe(gallery);
+})();
+</script>
 {{end}}

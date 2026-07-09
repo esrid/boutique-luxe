@@ -4,8 +4,8 @@
 <!-- Breadcrumb -->
 <nav class="maison-breadcrumb" aria-label="Fil d'Ariane">
   <a href="/">Accueil</a>
-  <span class="maison-breadcrumb__sep">/</span>
-  {{if .Filter.CategorySlug}}<a href="/products">Toutes les pièces</a><span class="maison-breadcrumb__sep">/</span>{{end}}
+  <span class="maison-breadcrumb__sep">›</span>
+  {{if .Filter.CategorySlug}}<a href="/products">Toutes les pièces</a><span class="maison-breadcrumb__sep">›</span>{{end}}
   <span>{{if .Filter.CategorySlug}}{{.Filter.CategorySlug}}{{else}}Toutes les pièces{{end}}</span>
 </nav>
 
@@ -59,8 +59,11 @@
 <div class="maison-product-grid">
   {{range .Products}}
   <a class="maison-product-card" href="/products/{{.Slug}}">
-    <span class="maison-product-card__image">
+    <span class="maison-product-card__image maison-product-card__image-wrap">
       {{if .Thumbnail}}<img src="{{.Thumbnail}}" alt="{{.Title}}" loading="lazy">{{end}}
+      <span class="maison-product-card__quick-add">
+        <button class="maison-product-card__quick-add-btn" type="button" onclick="event.preventDefault();event.stopPropagation();">Ajouter au panier</button>
+      </span>
     </span>
     <div class="maison-product-card__body">
       <h3 class="maison-product-card__title">{{.Title}}</h3>

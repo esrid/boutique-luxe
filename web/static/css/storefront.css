@@ -1726,3 +1726,478 @@ body:has(.maison-hero--full) .maison-navbar__cart-count {
 .maison-footer__legal-link:hover {
   color: var(--color-accent);
 }
+
+/* ═══════════════════════════════════════════════
+   HAMBURGER MENU — maison-menu-toggle / maison-sidebar
+   ═══════════════════════════════════════════════ */
+
+.maison-menu-toggle {
+  display: none;
+}
+
+.maison-navbar__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 1100;
+  padding: 4px;
+}
+
+.maison-navbar__hamburger span {
+  display: block;
+  width: 100%;
+  height: var(--hamburger-line-height, 1.5px);
+  background: var(--color-text);
+  transition: transform var(--sidebar-transition), opacity var(--sidebar-transition);
+  transform-origin: center;
+}
+
+body:has(.maison-hero--full) .maison-navbar__hamburger span {
+  background: #fff;
+}
+
+.maison-sidebar__overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1050;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--sidebar-transition);
+}
+
+.maison-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width, 320px);
+  height: 100%;
+  background: var(--color-bg);
+  z-index: 1060;
+  transform: translateX(-100%);
+  transition: transform var(--sidebar-transition);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-xl) var(--space-lg);
+  overflow-y: auto;
+}
+
+.maison-sidebar__close {
+  align-self: flex-end;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: color 300ms ease;
+}
+
+.maison-sidebar__close:hover {
+  color: var(--color-text);
+}
+
+.maison-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-top: var(--space-xl);
+}
+
+.maison-sidebar__link {
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-text);
+  padding: var(--space-sm) 0;
+  transition: opacity 300ms ease;
+}
+
+.maison-sidebar__link:hover {
+  opacity: 0.6;
+}
+
+.maison-sidebar__divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: var(--space-md) 0;
+}
+
+/* Toggle: open sidebar when checkbox is checked */
+body:has(.maison-menu-toggle:checked) .maison-sidebar {
+  transform: translateX(0);
+}
+
+body:has(.maison-menu-toggle:checked) .maison-sidebar__overlay {
+  display: block;
+  opacity: 1;
+}
+
+body:has(.maison-menu-toggle:checked) {
+  overflow: hidden;
+}
+
+@media (min-width: 769px) {
+  .maison-navbar__hamburger,
+  .maison-sidebar,
+  .maison-sidebar__overlay {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .maison-navbar__hamburger {
+    display: flex;
+  }
+
+  /* Home hero: hamburger lines white on dark bg */
+  body:has(.maison-hero--full) .maison-navbar__hamburger span {
+    background: #fff;
+  }
+
+  body:not(:has(.maison-hero--full)) .maison-navbar__hamburger span {
+    background: var(--color-text);
+  }
+}
+
+
+/* ═══════════════════════════════════════════════
+   MEGA-MENU — maison-mega-menu
+   ═══════════════════════════════════════════════ */
+
+.maison-navbar__link--has-dropdown {
+  position: relative;
+}
+
+.maison-mega-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  min-width: 480px;
+  padding: var(--space-xl);
+  display: flex;
+  gap: var(--space-xl);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--mega-menu-transition), transform var(--mega-menu-transition), visibility var(--mega-menu-transition);
+  z-index: 999;
+  box-shadow: none;
+}
+
+.maison-mega-menu::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: transparent;
+}
+
+.maison-navbar__link--has-dropdown:hover .maison-mega-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.maison-mega-menu__image {
+  width: 180px;
+  height: 220px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--color-bg-alt);
+}
+
+.maison-mega-menu__links {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.maison-mega-menu__title {
+  font-family: var(--font-body);
+  font-weight: var(--weight-medium);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-sm);
+}
+
+.maison-mega-menu__link {
+  font-family: var(--font-body);
+  font-weight: var(--weight-light);
+  font-size: var(--text-sm, 11px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+  text-decoration: none;
+  padding: 6px 0;
+  transition: color 200ms ease;
+}
+
+.maison-mega-menu__link:hover {
+  color: var(--color-text);
+}
+
+@media (max-width: 768px) {
+  .maison-mega-menu {
+    display: none !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════
+   QUICK ADD TO CART — maison-product-card__quick-add
+   ═══════════════════════════════════════════════ */
+
+.maison-product-card__image-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.maison-product-card__quick-add {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(100%);
+  transition: transform var(--quick-add-transition);
+  z-index: 2;
+  display: flex;
+}
+
+.maison-product-card:hover .maison-product-card__quick-add {
+  transform: translateY(0);
+}
+
+.maison-product-card__quick-add-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: var(--color-text);
+  color: var(--color-bg);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 300ms ease;
+}
+
+.maison-product-card__quick-add-btn:hover {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+
+/* ═══════════════════════════════════════════════
+   FREE SHIPPING PROGRESS BAR — maison-shipping-bar
+   ═══════════════════════════════════════════════ */
+
+.maison-shipping-bar {
+  grid-column: 1 / -1;
+  margin-bottom: var(--space-lg);
+}
+
+.maison-shipping-bar__message {
+  font-family: var(--font-body);
+  font-size: var(--text-sm, 11px);
+  font-weight: var(--weight-light);
+  color: var(--color-text-soft);
+  margin: 0 0 var(--space-sm);
+  letter-spacing: 0.05em;
+}
+
+.maison-shipping-bar__message--reached {
+  color: var(--color-success, #000);
+  font-weight: var(--weight-medium);
+}
+
+.maison-shipping-bar__track {
+  width: 100%;
+  height: var(--shipping-bar-height, 6px);
+  background: var(--color-accent-light, #e5e5e5);
+  overflow: hidden;
+}
+
+.maison-shipping-bar__fill {
+  height: 100%;
+  background: var(--color-text);
+  transition: width 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.maison-shipping-bar__fill--complete {
+  background: var(--color-success, #000);
+}
+
+
+/* ═══════════════════════════════════════════════
+   STICKY ADD-TO-CART — maison-sticky-atc
+   ═══════════════════════════════════════════════ */
+
+.maison-sticky-atc {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  z-index: 900;
+  padding: var(--space-sm) var(--space-md);
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.maison-sticky-atc--visible {
+  display: flex;
+}
+
+@media (min-width: 769px) {
+  .maison-sticky-atc {
+    display: none !important;
+  }
+}
+
+.maison-sticky-atc__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.maison-sticky-atc__name {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.maison-sticky-atc__price {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: var(--weight-regular);
+  color: var(--color-text-soft);
+  margin: 0;
+}
+
+.maison-sticky-atc .maison-btn {
+  flex-shrink: 0;
+  padding: 10px var(--space-lg);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+}
+
+
+/* ═══════════════════════════════════════════════
+   QUANTITY +/- CONTROL — maison-qty-control
+   ═══════════════════════════════════════════════ */
+
+.maison-qty-control {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+}
+
+.maison-qty-control__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  background: transparent;
+  border: none;
+  color: var(--color-text-soft);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: var(--weight-light);
+  transition: background 200ms ease, color 200ms ease;
+  padding: 0;
+  line-height: 1;
+}
+
+.maison-qty-control__btn:hover {
+  background: var(--color-bg-alt);
+  color: var(--color-text);
+}
+
+.maison-qty-control__btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.maison-qty-control__input {
+  width: 2.8rem;
+  height: 2.2rem;
+  text-align: center;
+  border: none;
+  border-left: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: var(--text-sm, 11px);
+  font-weight: var(--weight-regular);
+  color: var(--color-text);
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.maison-qty-control__input::-webkit-inner-spin-button,
+.maison-qty-control__input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+/* ═══════════════════════════════════════════════
+   IMAGE ZOOM ON HOVER — product card image
+   ═══════════════════════════════════════════════ */
+
+.maison-product-card__image img {
+  transition: transform var(--image-zoom-transition);
+}
+
+.maison-product-card:hover .maison-product-card__image img {
+  transform: scale(var(--image-zoom-scale));
+}
+
+
+/* ═══════════════════════════════════════════════
+   BREADCRUMB SEPARATOR — "›"
+   ═══════════════════════════════════════════════ */
+
+.maison-breadcrumb {
+  font-size: 11px;
+}
+
+.maison-breadcrumb__sep {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}

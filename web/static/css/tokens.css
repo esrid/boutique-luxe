@@ -82,6 +82,26 @@
   --content-narrow: 50rem;
   --color-border-light: var(--color-border);
   --space-section: var(--space-4xl);
+
+  /* ── Hamburger / Sidebar ────── */
+  --sidebar-width: 320px;
+  --sidebar-transition: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  --hamburger-line-height: 1.5px;
+
+  /* ── Mega-menu ────── */
+  --mega-menu-transition: 250ms ease-out;
+
+  /* ── Quick-add ────── */
+  --quick-add-transition: 200ms ease-out;
+
+  /* ── Shipping progress bar ────── */
+  --shipping-bar-height: 6px;
+  --shipping-bar-radius: 0;
+  --shipping-threshold: 10000; /* centimes = 100 € */
+
+  /* ── Image zoom ────── */
+  --image-zoom-scale: 1.03;
+  --image-zoom-transition: 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (prefers-color-scheme: dark) {
